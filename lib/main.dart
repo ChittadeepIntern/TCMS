@@ -1,8 +1,13 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:tcms/view/orders_dashboard_view.dart';
+import 'package:provider/provider.dart';
+import 'package:tcms/view/pages/home_dashboard_view.dart';
+import 'package:tcms/view/pages/login_dashboard_view.dart';
+import 'package:tcms/view_model/home_dashboard_controller.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => HomeDashboardController())
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,11 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FluentApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         title: "TCMS",
         theme: FluentThemeData.light(),
         darkTheme: FluentThemeData.dark(),
         themeMode: ThemeMode.light,
-        home: const OrdersDashboardView());
+        home: const HomeDashboardView());
   }
 }
