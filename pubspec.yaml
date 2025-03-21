@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   fluent_ui: ^4.11.2
   provider: ^6.1.2
+  trina_grid: ^1.6.4
   
 
 dev_dependencies:

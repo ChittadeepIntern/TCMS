@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:provider/provider.dart';
+import 'package:tcms/view_model/login_controller.dart';
 
 class LoginCard extends StatelessWidget {
   const LoginCard({
@@ -9,7 +11,8 @@ class LoginCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    LoginController loginController = Provider.of<LoginController>(context);
+
     return FractionallySizedBox(
       widthFactor: 0.75,
       alignment: Alignment.center,
@@ -29,6 +32,7 @@ class LoginCard extends StatelessWidget {
             const SizedBox(height: 32),
             // Username Field
             TextBox(
+              controller: loginController.userNameController,
               decoration: WidgetStatePropertyAll<BoxDecoration>(
                   BoxDecoration(border: Border.all(color: Colors.grey))),
               //header: 'Username',
@@ -40,6 +44,7 @@ class LoginCard extends StatelessWidget {
             const SizedBox(height: 16),
             // Password Field
             PasswordBox(
+              controller: loginController.passwordController,
               decoration: WidgetStatePropertyAll<BoxDecoration>(
                   BoxDecoration(border: Border.all(color: Colors.grey))),
               //header: 'Password',
@@ -54,7 +59,7 @@ class LoginCard extends StatelessWidget {
               onPressed: () {
                 // Handle login action
                 log('Login button pressed');
-                
+                loginController.login(context);
               },
               child: const Text('Log In'),
             ),

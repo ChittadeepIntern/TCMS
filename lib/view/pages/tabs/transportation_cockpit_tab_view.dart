@@ -1,8 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:tcms/view/widgets/CustomWidgets.dart';
+import 'package:trina_grid/trina_grid.dart';
 
 class TransportationCockpitTabView extends StatelessWidget {
-  const TransportationCockpitTabView({super.key});
+  TransportationCockpitTabView({super.key});
 
   Row _thirdRow() {
     return Row(
@@ -81,7 +82,9 @@ class TransportationCockpitTabView extends StatelessWidget {
             child: Row(
               children: [
                 Icon(FluentIcons.upload),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text("Pod Upload"),
               ],
             )),
@@ -94,7 +97,9 @@ class TransportationCockpitTabView extends StatelessWidget {
             child: Row(
               children: [
                 Icon(FluentIcons.close_pane),
-                SizedBox(width: 5,),
+                SizedBox(
+                  width: 5,
+                ),
                 Text("Close Order"),
               ],
             ))
@@ -189,12 +194,158 @@ class TransportationCockpitTabView extends StatelessWidget {
     );
   }
 
-  @override
+/*
+  final List<TrinaRow> rows = [
+    TrinaRow(
+      cells: {
+        'id': TrinaCell(value: 'user1'),
+        'name': TrinaCell(value: 'Mike'),
+        'age': TrinaCell(value: 20),
+        'role': TrinaCell(value: 'Programmer'),
+        'role2': TrinaCell(value: 'Programmer'),
+        'joined': TrinaCell(value: '2021-01-01'),
+        'working_time': TrinaCell(value: '09:00'),
+        'salary': TrinaCell(value: 300),
+      },
+    ),
+    TrinaRow(
+      cells: {
+        'id': TrinaCell(value: 'user2'),
+        'name': TrinaCell(value: 'Jack'),
+        'age': TrinaCell(value: 25),
+        'role': TrinaCell(value: 'Designer'),
+        'role2': TrinaCell(value: 'Designer'),
+        'joined': TrinaCell(value: '2021-02-01'),
+        'working_time': TrinaCell(value: '10:00'),
+        'salary': TrinaCell(value: 400),
+      },
+    ),
+    TrinaRow(
+      cells: {
+        'id': TrinaCell(value: 'user3'),
+        'name': TrinaCell(value: 'Suzi'),
+        'age': TrinaCell(value: 40),
+        'role': TrinaCell(value: 'Owner'),
+        'role2': TrinaCell(value: 'Owner'),
+        'joined': TrinaCell(value: '2021-03-01'),
+        'working_time': TrinaCell(value: '11:00'),
+        'salary': TrinaCell(value: 700),
+      },
+    ),
+  ];
+*/
+  final List<TrinaColumn> columns = <TrinaColumn>[
+    TrinaColumn(
+      title: '',
+      field: '',
+      type: TrinaColumnType.boolean(),
+    ),
+    TrinaColumn(
+      title: ' ',
+      field: ' ',
+      type: TrinaColumnType.boolean()
+    ),
+    TrinaColumn(
+      title: 'Ref No',
+      field: 'Ref No',
+      type: TrinaColumnType.number(),
+    ),
+    TrinaColumn(
+      title: 'Trip ID',
+      field: 'Trip ID',
+      // type: TrinaColumnType.select(<String>[
+      //   'Programmer',
+      //   'Designer',
+      //   'Owner',
+      // ]
+      type: TrinaColumnType.number(),
+      ),
+    
+    // TrinaColumn(
+    //   title: 'DO',
+    //   field: 'DO',
+    //   type: TrinaColumnType.select(
+    //     <String>[
+    //       'Programmer',
+    //       'Designer',
+    //       'Owner',
+    //     ],
+    //     builder: (item) {
+    //       return Row(children: [
+    //         Icon(item == 'Programmer' ? FluentIcons.code : FluentIcons.design),
+    //         const SizedBox(width: 8),
+    //         Text(item),
+    //       ]);
+    //     },
+    //   ),
+    // ),
+    TrinaColumn(
+      title: 'DO',
+      field: 'DO',
+      type: TrinaColumnType.date()
+      //type: TrinaColumnType.date(),
+    ),
+    TrinaColumn(
+      title: 'Customer',
+      field: 'Customer',
+      type: TrinaColumnType.text()
+      //type: TrinaColumnType.time(),
+    ),
+    
+    TrinaColumn(
+      title: 'Pickup',
+      field: 'Pickup',
+      type: TrinaColumnType.text()
+      //type: TrinaColumnType.time(),
+    ),
+    TrinaColumn(
+      title: 'Delivery',
+      field: 'Delivery',
+      type: TrinaColumnType.text()
+      //type: TrinaColumnType.time(),
+    ),
+    TrinaColumn(
+      title: 'Driver',
+      field: 'Driver',
+      type: TrinaColumnType.text()
+      //type: TrinaColumnType.time(),
+    ),
+    TrinaColumn(
+      title: 'Pickup Time',
+      field: 'Pickup Time',
+      type: TrinaColumnType.time()
+      //type: TrinaColumnType.time(),
+    ),
+    TrinaColumn(
+      title: 'Delivery Time',
+      field: 'Delivery Time',
+      type: TrinaColumnType.time(),
+    ),
+    TrinaColumn(
+      title: '   ',
+      field: '   ',
+      type: TrinaColumnType.boolean()
+      //type: TrinaColumnType.time(),
+    ),
+    TrinaColumn(
+      title: 'Track',
+      field: 'Track',
+      type: TrinaColumnType.text()
+      //type: TrinaColumnType.time(),
+    )
+  ];
+
+  @override 
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [_secondRow(), SizedBox(height: 10), _thirdRow()],
+        children: [
+          _secondRow(),
+          SizedBox(height: 10),
+          _thirdRow(),
+          Flexible(child: TrinaGrid(columns: columns, rows: [],)),
+        ],
       ),
     );
   }

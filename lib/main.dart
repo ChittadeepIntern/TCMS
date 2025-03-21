@@ -3,10 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:tcms/view/pages/home_dashboard_view.dart';
 import 'package:tcms/view/pages/login_dashboard_view.dart';
 import 'package:tcms/view_model/home_dashboard_controller.dart';
+import 'package:tcms/view_model/login_controller.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => HomeDashboardController())
+    ChangeNotifierProvider(create: (_) => HomeDashboardController()),
+    ChangeNotifierProvider(
+      create: (context) => LoginController(),
+    )
   ], child: const MyApp()));
 }
 

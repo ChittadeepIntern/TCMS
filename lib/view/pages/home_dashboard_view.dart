@@ -17,7 +17,6 @@ class HomeDashboardView extends StatelessWidget {
     );
   }
 
-
    TabView _tabView(HomeDashboardController value) {
     return TabView(
         onChanged: (index) => value.updateTab(index),
