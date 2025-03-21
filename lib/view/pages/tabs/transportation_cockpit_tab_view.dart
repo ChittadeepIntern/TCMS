@@ -194,46 +194,27 @@ class TransportationCockpitTabView extends StatelessWidget {
     );
   }
 
-/*
+
   final List<TrinaRow> rows = [
     TrinaRow(
       cells: {
-        'id': TrinaCell(value: 'user1'),
-        'name': TrinaCell(value: 'Mike'),
-        'age': TrinaCell(value: 20),
-        'role': TrinaCell(value: 'Programmer'),
-        'role2': TrinaCell(value: 'Programmer'),
-        'joined': TrinaCell(value: '2021-01-01'),
-        'working_time': TrinaCell(value: '09:00'),
-        'salary': TrinaCell(value: 300),
+        '': TrinaCell(value: 'user1'),
+        ' ': TrinaCell(value: 'Mike'),
+        'Ref No': TrinaCell(value: 20),
+        'Trip ID': TrinaCell(value: 'Programmer'),
+        'DO': TrinaCell(value: DateTime.now()),
+        'Customer': TrinaCell(value: 'ABCD'),
+        'Pickup': TrinaCell(value: '09:00'),
+        'Delivery': TrinaCell(value: 300),
+        'Driver': TrinaCell(value: 300),
+        'Pickup Time': TrinaCell(value: DateTime.now()),
+        'Delivery Time': TrinaCell(value: DateTime.now()),
+        '   ': TrinaCell(value: 300),
+        'Track': TrinaCell(value: 400),        
       },
-    ),
-    TrinaRow(
-      cells: {
-        'id': TrinaCell(value: 'user2'),
-        'name': TrinaCell(value: 'Jack'),
-        'age': TrinaCell(value: 25),
-        'role': TrinaCell(value: 'Designer'),
-        'role2': TrinaCell(value: 'Designer'),
-        'joined': TrinaCell(value: '2021-02-01'),
-        'working_time': TrinaCell(value: '10:00'),
-        'salary': TrinaCell(value: 400),
-      },
-    ),
-    TrinaRow(
-      cells: {
-        'id': TrinaCell(value: 'user3'),
-        'name': TrinaCell(value: 'Suzi'),
-        'age': TrinaCell(value: 40),
-        'role': TrinaCell(value: 'Owner'),
-        'role2': TrinaCell(value: 'Owner'),
-        'joined': TrinaCell(value: '2021-03-01'),
-        'working_time': TrinaCell(value: '11:00'),
-        'salary': TrinaCell(value: 700),
-      },
-    ),
+    )
   ];
-*/
+
   final List<TrinaColumn> columns = <TrinaColumn>[
     TrinaColumn(
       title: '',
@@ -344,7 +325,7 @@ class TransportationCockpitTabView extends StatelessWidget {
           _secondRow(),
           SizedBox(height: 10),
           _thirdRow(),
-          Flexible(child: TrinaGrid(columns: columns, rows: [],)),
+          Flexible(child: TrinaGrid(columns: columns, rows: rows,)),
         ],
       ),
     );
