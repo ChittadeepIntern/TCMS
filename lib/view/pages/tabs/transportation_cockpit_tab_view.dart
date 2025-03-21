@@ -194,23 +194,56 @@ class TransportationCockpitTabView extends StatelessWidget {
     );
   }
 
-
   final List<TrinaRow> rows = [
     TrinaRow(
       cells: {
         '': TrinaCell(value: 'user1'),
         ' ': TrinaCell(value: 'Mike'),
         'Ref No': TrinaCell(value: 20),
-        'Trip ID': TrinaCell(value: 'Programmer'),
+        'Trip ID': TrinaCell(value: 20),
         'DO': TrinaCell(value: DateTime.now()),
-        'Customer': TrinaCell(value: 'ABCD'),
-        'Pickup': TrinaCell(value: '09:00'),
-        'Delivery': TrinaCell(value: 300),
-        'Driver': TrinaCell(value: 300),
+        'Customer': TrinaCell(value: 'Programmer'),
+        'Pickup': TrinaCell(value: 'pickup'),
+        'Delivery': TrinaCell(value: 'pickup 2'),
+        'Driver': TrinaCell(value: 'Deriver 2'),
         'Pickup Time': TrinaCell(value: DateTime.now()),
         'Delivery Time': TrinaCell(value: DateTime.now()),
         '   ': TrinaCell(value: 300),
-        'Track': TrinaCell(value: 400),        
+        'Track': TrinaCell(value: 300),
+      },
+    ),
+    TrinaRow(
+      cells: {
+        '': TrinaCell(value: 'user1'),
+        ' ': TrinaCell(value: 'Mike'),
+        'Ref No': TrinaCell(value: 5),
+        'Trip ID': TrinaCell(value: 56),
+        'DO': TrinaCell(value: DateTime.now()),
+        'Customer': TrinaCell(value: 'Designer'),
+        'Pickup': TrinaCell(value: 'pickup'),
+        'Delivery': TrinaCell(value: 'pickup 2'),
+        'Driver': TrinaCell(value: 'Deriver 2'),
+        'Pickup Time': TrinaCell(value: DateTime.now()),
+        'Delivery Time': TrinaCell(value: DateTime.now()),
+        '   ': TrinaCell(value: 300),
+        'Track': TrinaCell(value: 300),
+      },
+    ),
+    TrinaRow(
+      cells: {
+        '': TrinaCell(value: 'user1'),
+        ' ': TrinaCell(value: 'Mike'),
+        'Ref No': TrinaCell(value: 20),
+        'Trip ID': TrinaCell(value: 20),
+        'DO': TrinaCell(value: DateTime.now()),
+        'Customer': TrinaCell(value: 'Programmer'),
+        'Pickup': TrinaCell(value: 'pickup'),
+        'Delivery': TrinaCell(value: 'pickup 2'),
+        'Driver': TrinaCell(value: 'Deriver 2'),
+        'Pickup Time': TrinaCell(value: DateTime.now()),
+        'Delivery Time': TrinaCell(value: DateTime.now()),
+        '   ': TrinaCell(value: 300),
+        'Track': TrinaCell(value: 300),
       },
     )
   ];
@@ -221,11 +254,7 @@ class TransportationCockpitTabView extends StatelessWidget {
       field: '',
       type: TrinaColumnType.boolean(),
     ),
-    TrinaColumn(
-      title: ' ',
-      field: ' ',
-      type: TrinaColumnType.boolean()
-    ),
+    TrinaColumn(title: ' ', field: ' ', type: TrinaColumnType.boolean()),
     TrinaColumn(
       title: 'Ref No',
       field: 'Ref No',
@@ -240,8 +269,8 @@ class TransportationCockpitTabView extends StatelessWidget {
       //   'Owner',
       // ]
       type: TrinaColumnType.number(),
-      ),
-    
+    ),
+
     // TrinaColumn(
     //   title: 'DO',
     //   field: 'DO',
@@ -260,63 +289,65 @@ class TransportationCockpitTabView extends StatelessWidget {
     //     },
     //   ),
     // ),
+    TrinaColumn(title: 'DO', field: 'DO', type: TrinaColumnType.date()
+        //type: TrinaColumnType.date(),
+        ),
     TrinaColumn(
-      title: 'DO',
-      field: 'DO',
-      type: TrinaColumnType.date()
-      //type: TrinaColumnType.date(),
-    ),
+        title: 'Customer', field: 'Customer', type: TrinaColumnType.text()
+        //type: TrinaColumnType.time(),
+        ),
+    // TrinaColumn(
+    //   title: 'salary',
+    //   field: 'salary',
+    //   type: TrinaColumnType.currency(),
+    //   footerRenderer: (rendererContext) {
+    //     return TrinaAggregateColumnFooter(
+    //       rendererContext: rendererContext,
+    //       formatAsCurrency: true,
+    //       type: TrinaAggregateColumnType.sum,
+    //       format: '#,###',
+    //       alignment: Alignment.center,
+    //       titleSpanBuilder: (text) {
+    //         return [
+    //           TextSpan(
+    //             text: 'Sum',
+    //             style: TextStyle(color: Colors.red),
+    //           ),
+    //           const TextSpan(text: ' : '),
+    //           TextSpan(text: text),
+    //         ];
+    //       },
+    //     );
+    //   },
+    // ),
+    TrinaColumn(title: 'Pickup', field: 'Pickup', type: TrinaColumnType.text()
+        //type: TrinaColumnType.time(),
+        ),
     TrinaColumn(
-      title: 'Customer',
-      field: 'Customer',
-      type: TrinaColumnType.text()
-      //type: TrinaColumnType.time(),
-    ),
-    
+        title: 'Delivery', field: 'Delivery', type: TrinaColumnType.text()
+        //type: TrinaColumnType.time(),
+        ),
+    TrinaColumn(title: 'Driver', field: 'Driver', type: TrinaColumnType.text()
+        //type: TrinaColumnType.time(),
+        ),
     TrinaColumn(
-      title: 'Pickup',
-      field: 'Pickup',
-      type: TrinaColumnType.text()
-      //type: TrinaColumnType.time(),
-    ),
-    TrinaColumn(
-      title: 'Delivery',
-      field: 'Delivery',
-      type: TrinaColumnType.text()
-      //type: TrinaColumnType.time(),
-    ),
-    TrinaColumn(
-      title: 'Driver',
-      field: 'Driver',
-      type: TrinaColumnType.text()
-      //type: TrinaColumnType.time(),
-    ),
-    TrinaColumn(
-      title: 'Pickup Time',
-      field: 'Pickup Time',
-      type: TrinaColumnType.time()
-      //type: TrinaColumnType.time(),
-    ),
+        title: 'Pickup Time', field: 'Pickup Time', type: TrinaColumnType.time()
+        //type: TrinaColumnType.time(),
+        ),
     TrinaColumn(
       title: 'Delivery Time',
       field: 'Delivery Time',
       type: TrinaColumnType.time(),
     ),
-    TrinaColumn(
-      title: '   ',
-      field: '   ',
-      type: TrinaColumnType.boolean()
-      //type: TrinaColumnType.time(),
-    ),
-    TrinaColumn(
-      title: 'Track',
-      field: 'Track',
-      type: TrinaColumnType.text()
-      //type: TrinaColumnType.time(),
-    )
+    TrinaColumn(title: '   ', field: '   ', type: TrinaColumnType.boolean()
+        //type: TrinaColumnType.time(),
+        ),
+    TrinaColumn(title: 'Track', field: 'Track', type: TrinaColumnType.text()
+        //type: TrinaColumnType.time(),
+        )
   ];
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
@@ -325,7 +356,11 @@ class TransportationCockpitTabView extends StatelessWidget {
           _secondRow(),
           SizedBox(height: 10),
           _thirdRow(),
-          Flexible(child: TrinaGrid(columns: columns, rows: rows,)),
+          Flexible(
+              child: TrinaGrid(
+            columns: columns,
+            rows: rows,
+          )),
         ],
       ),
     );
