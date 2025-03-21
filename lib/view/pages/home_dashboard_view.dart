@@ -6,8 +6,19 @@ import 'package:tcms/view_model/home_dashboard_controller.dart';
 
 class HomeDashboardView extends StatelessWidget {
   const HomeDashboardView({super.key});
+ 
+  @override
+  Widget build(BuildContext context) {
+    return ScaffoldPage(
+      header: PageHeader(commandBar: _commandBar()),
+      content: Center(
+          child: Consumer<HomeDashboardController>(
+              builder: (context, value, child) => _tabView(value))),
+    );
+  }
 
-  TabView _tabView(HomeDashboardController value) {
+
+   TabView _tabView(HomeDashboardController value) {
     return TabView(
         onChanged: (index) => value.updateTab(index),
         currentIndex: value.currentIndex,
@@ -63,37 +74,54 @@ class HomeDashboardView extends StatelessWidget {
     return CommandBar(primaryItems: [
       CommandBarButton(
         onPressed: () {},
-        label: const Text("Home"),
+        label: Row(
+          children: [Icon(FluentIcons.home),
+          SizedBox(width: 5,),
+            const Text("Home"),
+          ],
+        ),
       ),
       CommandBarSeparator(),
       CommandBarButton(
         onPressed: () {},
-        label: const Text("Raise a issue feedback"),
+        label: Row(
+          children: [Icon(FluentIcons.comment),
+          SizedBox(width: 5,),
+            const Text("Raise a issue feedback"),
+          ],
+        ),
       ),
       CommandBarSeparator(),
       CommandBarButton(
         onPressed: () {},
-        label: const Text("Help"),
-      ),
-      CommandBarButton(
-        onPressed: () {},
-        label: const Text("Settings"),
+        label: Row(
+          children: [Icon(FluentIcons.help),
+          SizedBox(width: 5,),
+            const Text("Help"),
+          ],
+        ),
       ),
       CommandBarSeparator(),
       CommandBarButton(
         onPressed: () {},
-        label: const Text("Logout"),
+        label: Row(
+          children: [Icon(FluentIcons.settings),
+          SizedBox(width: 5,),
+            const Text("Settings"),
+          ],
+        ),
+      ),
+      CommandBarSeparator(),
+      CommandBarButton(
+        onPressed: () {},
+        label: Row(
+          children: [Icon(FluentIcons.close_pane),
+          SizedBox(width: 5,),
+            const Text("Logout"),
+          ],
+        ),
       )
     ]);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return ScaffoldPage(
-      header: PageHeader(commandBar: _commandBar()),
-      content: Center(
-          child: Consumer<HomeDashboardController>(
-              builder: (context, value, child) => _tabView(value))),
-    );
-  }
 }
