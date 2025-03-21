@@ -7,4 +7,8 @@ class HomeDashboardController extends ChangeNotifier {
     currentIndex = index;
     notifyListeners();
   }
+
+  void logout(BuildContext context) {
+    Navigator.pop(context);
+  }
 }

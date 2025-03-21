@@ -6,18 +6,18 @@ import 'package:tcms/view_model/home_dashboard_controller.dart';
 
 class HomeDashboardView extends StatelessWidget {
   const HomeDashboardView({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage(
-      header: PageHeader(commandBar: _commandBar()),
+      header: PageHeader(commandBar: _commandBar(context)),
       content: Center(
           child: Consumer<HomeDashboardController>(
               builder: (context, value, child) => _tabView(value))),
     );
   }
 
-   TabView _tabView(HomeDashboardController value) {
+  TabView _tabView(HomeDashboardController value) {
     return TabView(
         onChanged: (index) => value.updateTab(index),
         currentIndex: value.currentIndex,
@@ -69,13 +69,18 @@ class HomeDashboardView extends StatelessWidget {
         ]);
   }
 
-  CommandBar _commandBar() {
+  CommandBar _commandBar(BuildContext context) {
+    final controller = Provider.of<HomeDashboardController>(context);
+
     return CommandBar(primaryItems: [
       CommandBarButton(
         onPressed: () {},
         label: Row(
-          children: [Icon(FluentIcons.home),
-          SizedBox(width: 5,),
+          children: [
+            Icon(FluentIcons.home),
+            SizedBox(
+              width: 5,
+            ),
             const Text("Home"),
           ],
         ),
@@ -84,8 +89,11 @@ class HomeDashboardView extends StatelessWidget {
       CommandBarButton(
         onPressed: () {},
         label: Row(
-          children: [Icon(FluentIcons.comment),
-          SizedBox(width: 5,),
+          children: [
+            Icon(FluentIcons.comment),
+            SizedBox(
+              width: 5,
+            ),
             const Text("Raise a issue feedback"),
           ],
         ),
@@ -94,8 +102,11 @@ class HomeDashboardView extends StatelessWidget {
       CommandBarButton(
         onPressed: () {},
         label: Row(
-          children: [Icon(FluentIcons.help),
-          SizedBox(width: 5,),
+          children: [
+            Icon(FluentIcons.help),
+            SizedBox(
+              width: 5,
+            ),
             const Text("Help"),
           ],
         ),
@@ -104,23 +115,31 @@ class HomeDashboardView extends StatelessWidget {
       CommandBarButton(
         onPressed: () {},
         label: Row(
-          children: [Icon(FluentIcons.settings),
-          SizedBox(width: 5,),
+          children: [
+            Icon(FluentIcons.settings),
+            SizedBox(
+              width: 5,
+            ),
             const Text("Settings"),
           ],
         ),
       ),
       CommandBarSeparator(),
       CommandBarButton(
-        onPressed: () {},
+        onPressed: () {
+          controller.logout(context);
+        },
         label: Row(
-          children: [Icon(FluentIcons.close_pane),
-          SizedBox(width: 5,),
+          children: [
+            Icon(FluentIcons.close_pane),
+            SizedBox(
+              width: 5,
+            ),
             const Text("Logout"),
           ],
         ),
       )
     ]);
   }
-
 }
+
