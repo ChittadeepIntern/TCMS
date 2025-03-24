@@ -1,5 +1,4 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:tcms/view/widgets/CustomWidgets.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class TransportationCockpitTabView extends StatelessWidget {
@@ -31,89 +30,13 @@ class TransportationCockpitTabView extends StatelessWidget {
         FilledButton(child: Text("Select all(ctrl+x)"), onPressed: () {}),
         SizedBox(width: 10),
         FilledButton(child: Text("Deselect all(ctrl+z)"), onPressed: () {}),
-        SizedBox(width: 10),
-        FilledButton(child: Text("Picture"), onPressed: () {}),
-      ],
+        ],
     );
   }
 
-  Row _firstRowSecondRow() {
-    return Row(
+  Row _secondRow() {
+    return Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        FilledButton(
-          style: CustomWidgets.buttonStyle(Colors.blue, Colors.white),
-          onPressed: () {},
-          child: Text("Expand/Collapse All"),
-        ),
-        SizedBox(
-          width: 5,
-        ),
-        FilledButton(
-            style: CustomWidgets.buttonStyle(Colors.green, Colors.white),
-            onPressed: () {},
-            child: Row(
-              children: [
-                Icon(FluentIcons.add),
-                SizedBox(
-                  width: 5,
-                ),
-                Text("Create Booking"),
-              ],
-            )),
-        SizedBox(
-          width: 5,
-        ),
-        FilledButton(
-            style: CustomWidgets.buttonStyle(Colors.orange, Colors.white),
-            onPressed: () {},
-            child: Row(children: [
-              Icon(FluentIcons.delivery_truck),
-              SizedBox(
-                width: 5,
-              ),
-              Text("Assign")
-            ])),
-        SizedBox(
-          width: 5,
-        ),
-        FilledButton(
-            style: CustomWidgets.buttonStyle(Colors.blue, Colors.white),
-            onPressed: () {},
-            child: Row(
-              children: [
-                Icon(FluentIcons.upload),
-                SizedBox(
-                  width: 5,
-                ),
-                Text("Pod Upload"),
-              ],
-            )),
-        SizedBox(
-          width: 5,
-        ),
-        FilledButton(
-            style: CustomWidgets.buttonStyle(Colors.red, Colors.white),
-            onPressed: () {},
-            child: Row(
-              children: [
-                Icon(FluentIcons.close_pane),
-                SizedBox(
-                  width: 5,
-                ),
-                Text("Close Order"),
-              ],
-            ))
-      ],
-    );
-  }
-
-  Row _secondRowSecondRow() {
-    return Row(
-      children: [
-        Text("Click"),
-        SizedBox(
-          width: 40,
-        ),
         Text("All"),
         SizedBox(
           width: 40,
@@ -184,15 +107,7 @@ class TransportationCockpitTabView extends StatelessWidget {
     );
   }
 
-  Row _secondRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _firstRowSecondRow(),
-        _secondRowSecondRow(),
-      ],
-    );
-  }
+
 
   final List<TrinaRow> rows = [
     TrinaRow(
