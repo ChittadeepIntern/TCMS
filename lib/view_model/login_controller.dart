@@ -21,7 +21,7 @@ class LoginController extends ChangeNotifier {
       notifyListeners();
       await _authRepository.login(
           userNameController.text, passwordController.text);
-      Navigator.push(
+      Navigator.pushReplacement(
           context, FluentPageRoute(builder: (context) => HomeDashboardView()));
       loading = false;
       notifyListeners();
