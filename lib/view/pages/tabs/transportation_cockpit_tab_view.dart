@@ -1,4 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:provider/provider.dart';
+import 'package:tcms/view_model/login_controller.dart';
+import 'package:tcms/view_model/transportation_cockpit_controller.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class TransportationCockpitTabView extends StatelessWidget {
@@ -30,12 +33,13 @@ class TransportationCockpitTabView extends StatelessWidget {
         FilledButton(child: Text("Select all(ctrl+x)"), onPressed: () {}),
         SizedBox(width: 10),
         FilledButton(child: Text("Deselect all(ctrl+z)"), onPressed: () {}),
-        ],
+      ],
     );
   }
 
   Row _secondRow() {
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text("All"),
         SizedBox(
@@ -106,8 +110,6 @@ class TransportationCockpitTabView extends StatelessWidget {
       ],
     );
   }
-
-
 
   final List<TrinaRow> rows = [
     TrinaRow(
@@ -264,6 +266,9 @@ class TransportationCockpitTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TransportationCockpitController transportationCockpitController =
+        Provider.of<TransportationCockpitController>(context);
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
