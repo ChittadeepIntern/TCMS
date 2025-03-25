@@ -18,5 +18,6 @@ class AuthRepository {
     } else {
       throw LoginException();
     }
+    
   }
 }

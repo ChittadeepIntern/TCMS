@@ -19,3 +19,7 @@ class LoginException extends AppException {
 class UnauthorizedException extends AppException {
   UnauthorizedException([String? message]) : super('Unauthorized to access dashboard');
 }
+
+class NoInternetException extends AppException {
+  NoInternetException([String? message]) : super('No internet connection');
+}

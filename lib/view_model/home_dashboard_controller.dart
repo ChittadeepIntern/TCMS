@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:tcms/view/pages/login_dashboard_view.dart';
 
 class HomeDashboardController extends ChangeNotifier {
   int currentIndex = 1;
@@ -9,6 +10,6 @@ class HomeDashboardController extends ChangeNotifier {
   }
 
   void logout(BuildContext context) {
-    Navigator.pop(context);
+    Navigator.pushReplacement(context, FluentPageRoute(builder: (context) => LoginDashboardView()));
   }
 }

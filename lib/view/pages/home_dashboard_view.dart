@@ -30,42 +30,42 @@ class HomeDashboardView extends StatelessWidget {
             text: Text('Transportation Cockpit'),
             body: TransportationCockpitTabView(),
           ),
-          Tab(
-            text: Text('Financial Management'),
-            body: Center(
-              child: Text("Content for tab 2"),
-            ),
-          ),
-          Tab(
-            text: Text('HR'),
-            body: Center(
-              child: Text("Content for tab 3"),
-            ),
-          ),
-          Tab(
-            text: Text('Truck Maintenence'),
-            body: Center(
-              child: Text("Content for tab 4"),
-            ),
-          ),
-          Tab(
-            text: Text('GPS'),
-            body: Center(
-              child: Text("Content for tab 5"),
-            ),
-          ),
-          Tab(
-            text: Text('Summary'),
-            body: Center(
-              child: Text("Content for tab 6"),
-            ),
-          ),
-          Tab(
-            text: Text('Reports and Payroll'),
-            body: Center(
-              child: Text("Content for tab 7"),
-            ),
-          )
+          // Tab(
+          //   text: Text('Financial Management'),
+          //   body: Center(
+          //     child: Text("Content for tab 2"),
+          //   ),
+          // ),
+          // Tab(
+          //   text: Text('HR'),
+          //   body: Center(
+          //     child: Text("Content for tab 3"),
+          //   ),
+          // ),
+          // Tab(
+          //   text: Text('Truck Maintenence'),
+          //   body: Center(
+          //     child: Text("Content for tab 4"),
+          //   ),
+          // ),
+          // Tab(
+          //   text: Text('GPS'),
+          //   body: Center(
+          //     child: Text("Content for tab 5"),
+          //   ),
+          // ),
+          // Tab(
+          //   text: Text('Summary'),
+          //   body: Center(
+          //     child: Text("Content for tab 6"),
+          //   ),
+          // ),
+          // Tab(
+          //   text: Text('Reports and Payroll'),
+          //   body: Center(
+          //     child: Text("Content for tab 7"),
+          //   ),
+          // )
         ]);
   }
 
