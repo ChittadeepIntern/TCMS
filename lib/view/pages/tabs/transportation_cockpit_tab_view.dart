@@ -1,6 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
-import 'package:tcms/view_model/login_controller.dart';
+import 'package:tcms/resources/grid_constants.dart';
 import 'package:tcms/view_model/transportation_cockpit_controller.dart';
 import 'package:trina_grid/trina_grid.dart';
 
@@ -111,75 +111,51 @@ class TransportationCockpitTabView extends StatelessWidget {
     );
   }
 
+
   final List<TrinaRow> rows = [
     TrinaRow(
       cells: {
-        '': TrinaCell(value: 'user1'),
-        ' ': TrinaCell(value: 'Mike'),
-        'Ref No': TrinaCell(value: 20),
-        'Trip ID': TrinaCell(value: 20),
-        'DO': TrinaCell(value: DateTime.now()),
-        'Customer': TrinaCell(value: 'Programmer'),
-        'Pickup': TrinaCell(value: 'pickup'),
-        'Delivery': TrinaCell(value: 'pickup 2'),
-        'Driver': TrinaCell(value: 'Deriver 2'),
-        'Pickup Time': TrinaCell(value: DateTime.now()),
-        'Delivery Time': TrinaCell(value: DateTime.now()),
-        '   ': TrinaCell(value: 300),
-        'Track': TrinaCell(value: 300),
-      },
-    ),
-    TrinaRow(
-      cells: {
-        '': TrinaCell(value: 'user1'),
-        ' ': TrinaCell(value: 'Mike'),
-        'Ref No': TrinaCell(value: 5),
-        'Trip ID': TrinaCell(value: 56),
-        'DO': TrinaCell(value: DateTime.now()),
-        'Customer': TrinaCell(value: 'Designer'),
-        'Pickup': TrinaCell(value: 'pickup'),
-        'Delivery': TrinaCell(value: 'pickup 2'),
-        'Driver': TrinaCell(value: 'Deriver 2'),
-        'Pickup Time': TrinaCell(value: DateTime.now()),
-        'Delivery Time': TrinaCell(value: DateTime.now()),
-        '   ': TrinaCell(value: 300),
-        'Track': TrinaCell(value: 300),
-      },
-    ),
-    TrinaRow(
-      cells: {
-        '': TrinaCell(value: 'user1'),
-        ' ': TrinaCell(value: 'Mike'),
-        'Ref No': TrinaCell(value: 20),
-        'Trip ID': TrinaCell(value: 20),
-        'DO': TrinaCell(value: DateTime.now()),
-        'Customer': TrinaCell(value: 'Programmer'),
-        'Pickup': TrinaCell(value: 'pickup'),
-        'Delivery': TrinaCell(value: 'pickup 2'),
-        'Driver': TrinaCell(value: 'Deriver 2'),
-        'Pickup Time': TrinaCell(value: DateTime.now()),
-        'Delivery Time': TrinaCell(value: DateTime.now()),
-        '   ': TrinaCell(value: 300),
-        'Track': TrinaCell(value: 300),
+        GridConstants.deliveryTimeGridFieldId: TrinaCell(value: 'user1'),
+        GridConstants.requestorPhoneGridFieldId: TrinaCell(value: 'Mike'),
+        GridConstants.truckGridFieldId: TrinaCell(value: 20),
+        GridConstants.pikcupTimeGridFieldId: TrinaCell(value: 20),
+        GridConstants.bookingIDGridFieldId: TrinaCell(value: DateTime.now()),
+        GridConstants.localPODThresholdGridFieldId: TrinaCell(value: 'Programmer'),
+        GridConstants.bookingSentToInvoiceGridFieldId: TrinaCell(value: GridConstants.pickupGridFieldId),
+        GridConstants.customerIdGridFieldId: TrinaCell(value: 'pickup 2'),
+        GridConstants.outstationPODThresholdGridFieldId: TrinaCell(value: 'Deriver 2'),
+        GridConstants.tonnageGridFieldId: TrinaCell(value: DateTime.now()),
+        GridConstants.manpowerGridFieldId: TrinaCell(value: 300),
+        GridConstants.lockedGridFieldId: TrinaCell(value: 300),
+        GridConstants.deliveryGridFieldId: TrinaCell(value: 300),
+        GridConstants.dropPointsGridFieldId: TrinaCell(value: 300),
+        GridConstants.pickupGridFieldId: TrinaCell(value: 300),
+        GridConstants.colorModeGridFieldId: TrinaCell(value: 300),
+        GridConstants.gpsTrackingUrlGridFieldId: TrinaCell(value: 300),
+        GridConstants.equipmentsGridFieldId: TrinaCell(value: 300),
+        GridConstants.driverGridFieldId: TrinaCell(value: 300),
+        GridConstants.bookedDateGridFieldId: TrinaCell(value: 300),
+        GridConstants.customerGridFieldId: TrinaCell(value: 300),
+        GridConstants.statusGridFieldId: TrinaCell(value: 300),
+        GridConstants.doNumbersGridFieldId: TrinaCell(value: 300),
+        GridConstants.agreedPriceGridFieldId: TrinaCell(value: 300),
+        GridConstants.vendorGridFieldId: TrinaCell(value: "abcd")
       },
     )
   ];
 
   final List<TrinaColumn> columns = <TrinaColumn>[
     TrinaColumn(
-      title: '',
-      field: '',
+      title: 'Delivery Time',
+      field: 'deliveryTime',
       type: TrinaColumnType.boolean(),
     ),
-    TrinaColumn(title: ' ', field: ' ', type: TrinaColumnType.boolean()),
     TrinaColumn(
-      title: 'Ref No',
-      field: 'Ref No',
+      title: 'Request or Phone',
+      field: GridConstants.requestorPhoneGridFieldId,
       type: TrinaColumnType.number(),
     ),
-    TrinaColumn(
-      title: 'Trip ID',
-      field: 'Trip ID',
+    TrinaColumn(title: GridConstants.truckGridFieldId, field: GridConstants.truckGridFieldId,
       // type: TrinaColumnType.select(<String>[
       //   'Programmer',
       //   'Designer',
@@ -206,12 +182,11 @@ class TransportationCockpitTabView extends StatelessWidget {
     //     },
     //   ),
     // ),
-    TrinaColumn(title: 'DO', field: 'DO', type: TrinaColumnType.date()
-        //type: TrinaColumnType.date(),
+    TrinaColumn(
+        title: 'Pickup Time', field: GridConstants.pikcupTimeGridFieldId, type: TrinaColumnType.date()
         ),
     TrinaColumn(
-        title: 'Customer', field: 'Customer', type: TrinaColumnType.text()
-        //type: TrinaColumnType.time(),
+        title: 'Booking ID', field: GridConstants.bookingIDGridFieldId, type: TrinaColumnType.text()
         ),
     // TrinaColumn(
     //   title: 'salary',
@@ -237,31 +212,35 @@ class TransportationCockpitTabView extends StatelessWidget {
     //     );
     //   },
     // ),
-    TrinaColumn(title: 'Pickup', field: 'Pickup', type: TrinaColumnType.text()
+    TrinaColumn(title: 'Local POD Threshold',field: GridConstants.localPODThresholdGridFieldId,type: TrinaColumnType.text()        ),
+    TrinaColumn(title: 'Booking Sent To Invoice',field: GridConstants.bookingSentToInvoiceGridFieldId,type: TrinaColumnType.text()
+        //type: TrinaColumnType.time(),
+         ),
+    TrinaColumn(title: 'Customer ID', field: GridConstants.customerIdGridFieldId, type: TrinaColumnType.text()
         //type: TrinaColumnType.time(),
         ),
-    TrinaColumn(
-        title: 'Delivery', field: 'Delivery', type: TrinaColumnType.text()
+    TrinaColumn(title: 'Outstation POD Threshold',field: GridConstants.outstationPODThresholdGridFieldId,type: TrinaColumnType.time()
         //type: TrinaColumnType.time(),
         ),
-    TrinaColumn(title: 'Driver', field: 'Driver', type: TrinaColumnType.text()
+    TrinaColumn(title: 'Tonnage',field: GridConstants.tonnageGridFieldId,type: TrinaColumnType.time(),),
+    TrinaColumn(title: 'Manpower', field: GridConstants.manpowerGridFieldId, type: TrinaColumnType.boolean()
         //type: TrinaColumnType.time(),
         ),
-    TrinaColumn(
-        title: 'Pickup Time', field: 'Pickup Time', type: TrinaColumnType.time()
-        //type: TrinaColumnType.time(),
-        ),
-    TrinaColumn(
-      title: 'Delivery Time',
-      field: 'Delivery Time',
-      type: TrinaColumnType.time(),
-    ),
-    TrinaColumn(title: '   ', field: '   ', type: TrinaColumnType.boolean()
-        //type: TrinaColumnType.time(),
-        ),
-    TrinaColumn(title: 'Track', field: 'Track', type: TrinaColumnType.text()
-        //type: TrinaColumnType.time(),
-        )
+    TrinaColumn(title: 'Locked', field: GridConstants.lockedGridFieldId, type: TrinaColumnType.text()),
+    //type: TrinaColumnType.time(),
+    TrinaColumn(title: 'Delivery', field: GridConstants.deliveryGridFieldId, type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Drop Points',field: GridConstants.dropPointsGridFieldId,type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Pickup', field: GridConstants.pickupGridFieldId, type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Color Mode',field: GridConstants.colorModeGridFieldId,type: TrinaColumnType.text()),
+    TrinaColumn(title: 'GPS tracking url',field: GridConstants.gpsTrackingUrlGridFieldId,type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Equipments', field: GridConstants.equipmentsGridFieldId, type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Driver',field: GridConstants.driverGridFieldId,type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Booked Date', field: GridConstants.bookedDateGridFieldId, type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Customer', field: GridConstants.customerGridFieldId, type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Status', field: GridConstants.statusGridFieldId, type: TrinaColumnType.text()),
+    TrinaColumn(title: 'DO Number', field: GridConstants.doNumbersGridFieldId,type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Agreed Price', field: GridConstants.agreedPriceGridFieldId, type: TrinaColumnType.text()),
+    TrinaColumn(title: 'Vendor', field: GridConstants.vendorGridFieldId, type: TrinaColumnType.text()),
   ];
 
   @override

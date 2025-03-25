@@ -11,7 +11,7 @@ class AuthRepository {
   Future<LoginResponseModel> login(String username, String password) async {
     LoginResponseModel loginResponseModel;
     Response response = await _service.login(username, password);
-    log(response.data.toString());
+    //log(response.data.toString());
     if (response.statusCode == 200) {
       loginResponseModel = LoginResponseModel.fromJson(response.data);
       return loginResponseModel;

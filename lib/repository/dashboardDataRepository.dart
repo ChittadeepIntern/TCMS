@@ -13,7 +13,7 @@ class DashboardDataRepository {
     DashboardDataResponseModel dashboardDataResponseModel;
     Response response = await _service.getDashboardData(username, authKey);
 
-    log(response.data);
+    //log(response.data);
 
     if (response.statusCode == 200) {
       //log("Let us check the type data");
