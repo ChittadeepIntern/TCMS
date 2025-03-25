@@ -14,6 +14,8 @@ class LoginController extends ChangeNotifier {
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  late LoginResponseModel loginResponseModel;
+
   bool loading = false;
 
   Future<void> login(BuildContext context) async {
@@ -21,11 +23,12 @@ class LoginController extends ChangeNotifier {
       try {
         loading = true;
         notifyListeners();
-        LoginResponseModel loginResponseModel = await _authRepository.login(
+        loginResponseModel = await _authRepository.login(
             userNameController.text, passwordController.text);
         final FlutterSecureStorage storage = FlutterSecureStorage();
         await storage.write(key: 'username', value: userNameController.text);
         await storage.write(key: 'authKey', value: loginResponseModel.authKey);
+
         await Navigator.pushReplacement(context,
             FluentPageRoute(builder: (context) => HomeDashboardView()));
         log("NAvigated to next page");
@@ -33,11 +36,14 @@ class LoginController extends ChangeNotifier {
         log("In login controller ${e.toString()}");
         EasyOverlay.show(
             child: Alertdialog(e.toString()), barrierColor: Colors.black);
-      }
-      finally {
+      } finally {
         loading = false;
         notifyListeners();
       }
     }
+  }
+
+  AccessLevel getAccessLevel() {
+    return loginResponseModel.accessLevel!;
   }
 }

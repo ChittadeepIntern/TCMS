@@ -1,19 +1,40 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:tcms/models/login_response_model.dart';
 import 'package:tcms/view/pages/tabs/transportation_cockpit_tab_view.dart';
 import 'package:tcms/view/pages/tabs/welcome_to_dashboard_tab_view.dart';
 import 'package:tcms/view_model/home_dashboard_controller.dart';
+import 'package:tcms/view_model/login_controller.dart';
 
 class HomeDashboardView extends StatelessWidget {
   const HomeDashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Provider.of<LoginController>(context);
+
     return ScaffoldPage(
-      header: PageHeader(commandBar: _commandBar(context)),
+      header: PageHeader(
+          leading: getProfileWidgets(loginController.getAccessLevel()),
+          commandBar: _commandBar(context)),
       content: Center(
           child: Consumer<HomeDashboardController>(
               builder: (context, value, child) => _tabView(value))),
+    );
+  }
+
+  Row getProfileWidgets(AccessLevel accessLevel) {
+    return Row(
+      children: [
+        Text('accessLevelId'),
+        Text('${accessLevel.accessLevelId}'),
+        Text('Access Role'),
+        Text(accessLevel.accessRole ?? ''),
+        Text('Employee Name'),
+        Text(accessLevel.employeeName ?? ''),
+        Text('Employee Id'),
+        Text(accessLevel.employeeId ?? ''),
+      ],
     );
   }
 
@@ -142,4 +163,3 @@ class HomeDashboardView extends StatelessWidget {
     ]);
   }
 }
-
