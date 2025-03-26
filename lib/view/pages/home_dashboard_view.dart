@@ -24,16 +24,33 @@ class HomeDashboardView extends StatelessWidget {
   }
 
   Row getProfileWidgets(AccessLevel accessLevel) {
-    return Row(
+    return Row(mainAxisAlignment: MainAxisAlignment.center,
+    spacing: 20,
       children: [
-        Text('accessLevelId'),
-        Text('${accessLevel.accessLevelId}'),
-        Text('Access Role'),
-        Text(accessLevel.accessRole ?? ''),
-        Text('Employee Name'),
-        Text(accessLevel.employeeName ?? ''),
-        Text('Employee Id'),
-        Text(accessLevel.employeeId ?? ''),
+        Column(
+          children: [
+            Text('Access Level Id'),
+            Text('${accessLevel.accessLevelId}'),
+          ],
+        ),
+        Column(
+          children: [
+            Text('Access Role'),
+            Text(accessLevel.accessRole ?? ''),
+          ],
+        ),
+        Column(
+          children: [
+            Text('Employee Name'),
+            Text(accessLevel.employeeName ?? ''),
+          ],
+        ),
+        Column(
+          children: [
+            Text('Employee ID'),
+            Text(accessLevel.employeeId ?? ''),
+          ],
+        ),
       ],
     );
   }
