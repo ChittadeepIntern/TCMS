@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:tcms/resources/grid_constants.dart';
@@ -5,7 +7,7 @@ import 'package:tcms/view_model/transportation_cockpit_controller.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class TransportationCockpitTabView extends StatelessWidget {
-  TransportationCockpitTabView({super.key});
+  const TransportationCockpitTabView({super.key});
 
   Row _thirdRow() {
     return Row(
@@ -143,9 +145,8 @@ class TransportationCockpitTabView extends StatelessWidget {
   //   )
   // ];
 
-    @override
+  @override
   Widget build(BuildContext context) {
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -156,11 +157,18 @@ class TransportationCockpitTabView extends StatelessWidget {
           Flexible(
               child: Consumer<TransportationCockpitController>(
             builder: (BuildContext context,
-                    TransportationCockpitController controller, Widget? child) => controller.loading?ProgressRing():
-                TrinaGrid(
-              columns: controller.columns,
-              rows: controller.rows,
-            ),
+                    TransportationCockpitController controller,
+                    Widget? child) =>
+                controller.loading
+                    ? ProgressRing()
+                    : TrinaGrid(
+                        onRowChecked: (event) {
+                          print("event happening");
+                          controller.rowsSelected = true;
+                        },
+                        columns: controller.columns,
+                        rows: controller.rows,
+                      ),
           )),
         ],
       ),

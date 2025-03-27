@@ -15,8 +15,9 @@ class AuthRepository {
     if (response.statusCode == 200) {
       loginResponseModel = LoginResponseModel.fromJson(response.data);
       return loginResponseModel;
-    } else {
-      throw LoginException();
+    } 
+    else {
+      throw UnauthorizedException();
     }
     
   }

@@ -37,11 +37,15 @@ class LoginCard extends StatelessWidget {
                   BoxDecoration(border: Border.all(color: Colors.grey))),
               //header: 'Username',
               placeholder: 'Enter your username',
-              onChanged: (value) {
-                // Handle username change
-              },
             ),
+            Consumer<LoginController>(
+                builder: (BuildContext context, LoginController controller,
+                        Widget? child) =>
+                    Visibility(
+                        visible: controller.userNameEmpty,
+                        child: Text("Username cannot be empty", style: TextStyle(color: Colors.red)))),
             const SizedBox(height: 16),
+
             // Password Field
             PasswordBox(
               controller: loginController.passwordController,
@@ -49,10 +53,14 @@ class LoginCard extends StatelessWidget {
                   BoxDecoration(border: Border.all(color: Colors.grey))),
               //header: 'Password',
               placeholder: 'Enter your password',
-              onChanged: (value) {
-                // Handle password change
-              },
             ),
+            Consumer<LoginController>(
+                builder: (BuildContext context, LoginController controller,
+                        Widget? child) =>
+                    Visibility(
+                        visible: controller.passwordEmpty,
+                        child: Text("Password cannot be empty", style: TextStyle(color: Colors.red),))),
+
             const SizedBox(height: 24),
             // Login Button
             FilledButton(

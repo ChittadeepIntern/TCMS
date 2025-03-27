@@ -1,10 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:tcms/models/login_response_model.dart';
+import 'package:tcms/view/pages/route_view.dart';
 import 'package:tcms/view/pages/tabs/transportation_cockpit_tab_view.dart';
 import 'package:tcms/view/pages/tabs/welcome_to_dashboard_tab_view.dart';
 import 'package:tcms/view_model/home_dashboard_controller.dart';
 import 'package:tcms/view_model/login_controller.dart';
+import 'package:tcms/view_model/transportation_cockpit_controller.dart';
 
 class HomeDashboardView extends StatelessWidget {
   const HomeDashboardView({super.key});
@@ -14,6 +16,14 @@ class HomeDashboardView extends StatelessWidget {
     LoginController loginController = Provider.of<LoginController>(context);
 
     return ScaffoldPage(
+      bottomBar: Consumer<TransportationCockpitController>(
+        builder: (BuildContext context, TransportationCockpitController value,
+                Widget? child) =>
+            Visibility(
+          visible: value.rowsSelected,
+          child: bottomBarRow(context),
+        ),
+      ),
       header: PageHeader(
           leading: getProfileWidgets(loginController.getAccessLevel()),
           commandBar: _commandBar(context)),
@@ -23,9 +33,21 @@ class HomeDashboardView extends StatelessWidget {
     );
   }
 
+  Row bottomBarRow(BuildContext context) {
+    return Row(children: [
+      FilledButton(
+          child: Text('Next'),
+          onPressed: () {
+            Navigator.push(
+                context, FluentPageRoute(builder: (context) => RouteView()));
+          })
+    ]);
+  }
+
   Row getProfileWidgets(AccessLevel accessLevel) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
-    spacing: 20,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 20,
       children: [
         Column(
           children: [
@@ -67,43 +89,7 @@ class HomeDashboardView extends StatelessWidget {
           Tab(
             text: Text('Transportation Cockpit'),
             body: TransportationCockpitTabView(),
-          ),
-          // Tab(
-          //   text: Text('Financial Management'),
-          //   body: Center(
-          //     child: Text("Content for tab 2"),
-          //   ),
-          // ),
-          // Tab(
-          //   text: Text('HR'),
-          //   body: Center(
-          //     child: Text("Content for tab 3"),
-          //   ),
-          // ),
-          // Tab(
-          //   text: Text('Truck Maintenence'),
-          //   body: Center(
-          //     child: Text("Content for tab 4"),
-          //   ),
-          // ),
-          // Tab(
-          //   text: Text('GPS'),
-          //   body: Center(
-          //     child: Text("Content for tab 5"),
-          //   ),
-          // ),
-          // Tab(
-          //   text: Text('Summary'),
-          //   body: Center(
-          //     child: Text("Content for tab 6"),
-          //   ),
-          // ),
-          // Tab(
-          //   text: Text('Reports and Payroll'),
-          //   body: Center(
-          //     child: Text("Content for tab 7"),
-          //   ),
-          // )
+          )
         ]);
   }
 

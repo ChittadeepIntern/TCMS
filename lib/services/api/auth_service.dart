@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:tcms/resources/api_constants.dart';
 import 'package:tcms/resources/app_exceptions.dart';
@@ -9,10 +11,10 @@ class AuthService {
 
   Future<Response> login(String username, String password) async {
     try {
-      return await _dio
-          .get('${ApiConstants.loginEndpoint}/$username/$password');
-    } on DioException {
-      throw NoInternetException();
+      return await _dio.get('${ApiConstants.loginEndpoint}/$username/$password',
+          options: Options(validateStatus: (status) => true));
+    } catch (e) {
+      throw LoginException();
     }
   }
 }

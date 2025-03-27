@@ -4,7 +4,7 @@ import 'package:easy_overlay/easy_overlay.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tcms/models/dashboard_data_response_model.dart';
-import 'package:tcms/repository/dashboardDataRepository.dart';
+import 'package:tcms/repository/dashboard_data_repository.dart';
 import 'package:tcms/resources/app_exceptions.dart';
 import 'package:tcms/resources/grid_constants.dart';
 import 'package:tcms/view/widgets/AlertDialog.dart';
@@ -16,7 +16,7 @@ class TransportationCockpitController extends ChangeNotifier {
   bool loading = false;
 
   late DashboardDataResponseModel dashboardDataResponseModel;
-
+  bool rowsSelected = true;
   List<TrinaRow> rows = [];
   List<TrinaColumn> columns = [];
 
@@ -63,6 +63,7 @@ class TransportationCockpitController extends ChangeNotifier {
       rows = data.map((e) {
         log("${e.toJson()}");
         return TrinaRow(cells: {
+          'selected': TrinaCell(value: false),
           GridConstants.deliveryTimeGridFieldId:
               TrinaCell(value: e.deliveryTime),
           GridConstants.requestorPhoneGridFieldId:
@@ -138,6 +139,11 @@ class TransportationCockpitController extends ChangeNotifier {
 
   void setupGrid() {
     columns = <TrinaColumn>[
+      TrinaColumn(
+          title: 'Selected',
+          field: 'selected',
+          enableRowChecked: true,
+          type: TrinaColumnType.boolean()),
       TrinaColumn(
         title: 'Delivery Time',
         field: 'deliveryTime',
@@ -301,4 +307,6 @@ class TransportationCockpitController extends ChangeNotifier {
           type: TrinaColumnType.text()),
     ];
   }
+
+
 }
