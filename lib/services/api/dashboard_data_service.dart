@@ -8,14 +8,12 @@ class DashboardDataService {
   final Dio _dio;
 
   DashboardDataService()
-      : _dio = Dio(BaseOptions(
-            baseUrl: ApiConstants.BASE_URL));
+      : _dio = Dio(BaseOptions(baseUrl: TcmsApiConstants.BASE_URL));
 
   Future<Response> getDashboardData(String username, String authKey) async {
     try {
       return await _dio
-          .get('${ApiConstants.dashboardDataEndpoint}/$username/$authKey');
-      
+          .get('${TcmsApiConstants.dashboardDataEndpoint}/$username/$authKey');
     } catch (e) {
       log(e.toString());
       throw NoInternetException();
