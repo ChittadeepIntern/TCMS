@@ -11,8 +11,8 @@ class AuthService {
 
   Future<Response> login(String username, String password) async {
     try {
-      return await _dio.get('${ApiConstants.loginEndpoint}/$username/$password',
-          options: Options(validateStatus: (status) => true));
+      return await _dio
+          .get('${ApiConstants.loginEndpoint}/$username/$password');
     } catch (e) {
       throw LoginException();
     }

@@ -20,7 +20,7 @@ class HomeDashboardView extends StatelessWidget {
         builder: (BuildContext context, TransportationCockpitController value,
                 Widget? child) =>
             Visibility(
-          visible: value.rowsSelected,
+          visible: true,
           child: bottomBarRow(context),
         ),
       ),
@@ -34,7 +34,7 @@ class HomeDashboardView extends StatelessWidget {
   }
 
   Row bottomBarRow(BuildContext context) {
-    return Row(children: [
+    return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
       FilledButton(
           child: Text('Next'),
           onPressed: () {

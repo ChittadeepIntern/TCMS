@@ -163,8 +163,7 @@ class TransportationCockpitTabView extends StatelessWidget {
                     ? ProgressRing()
                     : TrinaGrid(
                         onRowChecked: (event) {
-                          print("event happening");
-                          controller.rowsSelected = true;
+                          controller.tapCheckbox(event);
                         },
                         columns: controller.columns,
                         rows: controller.rows,

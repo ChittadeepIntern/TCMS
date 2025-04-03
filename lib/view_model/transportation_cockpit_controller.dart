@@ -16,7 +16,7 @@ class TransportationCockpitController extends ChangeNotifier {
   bool loading = false;
 
   late DashboardDataResponseModel dashboardDataResponseModel;
-  bool rowsSelected = true;
+  bool rowsSelected = false;
   List<TrinaRow> rows = [];
   List<TrinaColumn> columns = [];
 
@@ -63,38 +63,47 @@ class TransportationCockpitController extends ChangeNotifier {
       rows = data.map((e) {
         log("${e.toJson()}");
         return TrinaRow(cells: {
-          'selected': TrinaCell(value: false),
+          'selected': TrinaCell(value: ''),
           GridConstants.deliveryTimeGridFieldId:
-              TrinaCell(value: e.deliveryTime),
+              TrinaCell(value: e.deliveryTime ?? ''),
           GridConstants.requestorPhoneGridFieldId:
-              TrinaCell(value: e.requestorPhone),
-          GridConstants.truckGridFieldId: TrinaCell(value: e.truck),
-          GridConstants.pikcupTimeGridFieldId: TrinaCell(value: e.pikcupTime),
-          GridConstants.bookingIDGridFieldId: TrinaCell(value: e.bookingID),
+              TrinaCell(value: e.requestorPhone ?? ''),
+          GridConstants.truckGridFieldId: TrinaCell(value: e.truck ?? ''),
+          GridConstants.pikcupTimeGridFieldId:
+              TrinaCell(value: e.pikcupTime ?? ''),
+          GridConstants.bookingIDGridFieldId:
+              TrinaCell(value: e.bookingID ?? ''),
           GridConstants.localPODThresholdGridFieldId:
-              TrinaCell(value: e.localPODThreshold),
+              TrinaCell(value: e.localPODThreshold ?? ''),
           GridConstants.bookingSentToInvoiceGridFieldId:
-              TrinaCell(value: e.bookingSentToInvoice),
-          GridConstants.customerIdGridFieldId: TrinaCell(value: e.customerId),
+              TrinaCell(value: e.bookingSentToInvoice ?? ''),
+          GridConstants.customerIdGridFieldId:
+              TrinaCell(value: e.customerId ?? ''),
           GridConstants.outstationPODThresholdGridFieldId:
-              TrinaCell(value: e.outstationPODThreshold),
-          GridConstants.tonnageGridFieldId: TrinaCell(value: e.tonnage),
-          GridConstants.manpowerGridFieldId: TrinaCell(value: e.manpower),
-          GridConstants.lockedGridFieldId: TrinaCell(value: e.locked),
-          GridConstants.deliveryGridFieldId: TrinaCell(value: e.delivery),
-          GridConstants.dropPointsGridFieldId: TrinaCell(value: e.dropPoints),
-          GridConstants.pickupGridFieldId: TrinaCell(value: e.pickup),
-          GridConstants.colorModeGridFieldId: TrinaCell(value: e.colorMode),
+              TrinaCell(value: e.outstationPODThreshold ?? ''),
+          GridConstants.tonnageGridFieldId: TrinaCell(value: e.tonnage ?? ''),
+          GridConstants.manpowerGridFieldId: TrinaCell(value: e.manpower ?? ''),
+          GridConstants.lockedGridFieldId: TrinaCell(value: e.locked ?? ''),
+          GridConstants.deliveryGridFieldId: TrinaCell(value: e.delivery ?? ''),
+          GridConstants.dropPointsGridFieldId:
+              TrinaCell(value: e.dropPoints ?? ''),
+          GridConstants.pickupGridFieldId: TrinaCell(value: e.pickup ?? ''),
+          GridConstants.colorModeGridFieldId:
+              TrinaCell(value: e.colorMode ?? ''),
           GridConstants.gpsTrackingUrlGridFieldId:
-              TrinaCell(value: e.gpsTrackingUrl),
-          GridConstants.equipmentsGridFieldId: TrinaCell(value: e.equipments),
-          GridConstants.driverGridFieldId: TrinaCell(value: e.driver),
-          GridConstants.bookedDateGridFieldId: TrinaCell(value: e.bookedDate),
-          GridConstants.customerGridFieldId: TrinaCell(value: e.customer),
-          GridConstants.statusGridFieldId: TrinaCell(value: e.status),
-          GridConstants.doNumbersGridFieldId: TrinaCell(value: e.doNumbers),
-          GridConstants.agreedPriceGridFieldId: TrinaCell(value: e.agreedPrice),
-          GridConstants.vendorGridFieldId: TrinaCell(value: e.vendor)
+              TrinaCell(value: e.gpsTrackingUrl ?? ''),
+          GridConstants.equipmentsGridFieldId:
+              TrinaCell(value: e.equipments ?? ''),
+          GridConstants.driverGridFieldId: TrinaCell(value: e.driver ?? ''),
+          GridConstants.bookedDateGridFieldId:
+              TrinaCell(value: e.bookedDate ?? ''),
+          GridConstants.customerGridFieldId: TrinaCell(value: e.customer ?? ''),
+          GridConstants.statusGridFieldId: TrinaCell(value: e.status ?? ''),
+          GridConstants.doNumbersGridFieldId:
+              TrinaCell(value: e.doNumbers ?? ''),
+          GridConstants.agreedPriceGridFieldId:
+              TrinaCell(value: e.agreedPrice ?? ''),
+          GridConstants.vendorGridFieldId: TrinaCell(value: e.vendor ?? '')
         });
       }).toList();
     }
@@ -143,7 +152,7 @@ class TransportationCockpitController extends ChangeNotifier {
           title: 'Selected',
           field: 'selected',
           enableRowChecked: true,
-          type: TrinaColumnType.boolean()),
+          type: TrinaColumnType.text()),
       TrinaColumn(
         title: 'Delivery Time',
         field: 'deliveryTime',
@@ -308,5 +317,13 @@ class TransportationCockpitController extends ChangeNotifier {
     ];
   }
 
-
+  void tapCheckbox(TrinaGridOnRowCheckedEvent event) {
+    print("Rows has been selecetd");
+    event.row!.cells.forEach((key, value) {
+      print(value.value.toString());
+    });
+    print(event.rowIdx.toString());
+    rowsSelected = true;
+    notifyListeners();
+  }
 }

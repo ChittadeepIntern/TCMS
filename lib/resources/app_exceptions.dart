@@ -13,7 +13,7 @@ class AppException implements Exception {
 }
 
 class LoginException extends AppException {
-  LoginException([String? message]) : super('Error during login');
+  LoginException([String? message]) : super('no credentials found'); 
 }
 
 class UnauthorizedException extends AppException {

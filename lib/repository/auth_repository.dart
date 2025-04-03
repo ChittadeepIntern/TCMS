@@ -12,13 +12,10 @@ class AuthRepository {
     LoginResponseModel loginResponseModel;
     Response response = await _service.login(username, password);
     //log(response.data.toString());
-    if (response.statusCode == 200) {
       loginResponseModel = LoginResponseModel.fromJson(response.data);
+      if (loginResponseModel.authKey == 'false') {
+        throw UnauthorizedException();
+      }
       return loginResponseModel;
-    } 
-    else {
-      throw UnauthorizedException();
-    }
-    
   }
 }
