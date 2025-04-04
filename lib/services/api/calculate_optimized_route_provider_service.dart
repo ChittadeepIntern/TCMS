@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:tcms/resources/api_constants.dart';
 import 'package:tcms/resources/app_exceptions.dart';
@@ -30,9 +32,11 @@ class CalculateOptimizedRouteProviderService {
       ]
     };
 
+
     try {
       return await _dio.post(url, queryParameters: queryParameters, data: data);
     } catch (e) {
+      log(e.toString());
       throw NoInternetException();
     }
   }

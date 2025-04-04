@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:tcms/resources/api_constants.dart';
 import 'package:tcms/resources/app_exceptions.dart';
@@ -10,18 +12,19 @@ class GetOptimizedRouteProviderService {
 
   Future<Response> getOptimizedRouteResult(String id) async {
     // URL of the endpoint
-    String url = NbApiConstants.optimizedRouteEndpoint;
-    
+    String url = NbApiConstants.getOptimizedRouteEndpoint;
+
     // Parameters to include in the URL
     Map<String, dynamic> queryParameters = {
       'id': id,
       'key': NbApiConstants.nbAPIKey,
     };
 
-    try{
-      return await _dio.post(url, queryParameters: queryParameters);
-    } catch(e)
-    {
+    try {
+      log("Last here");
+      return await _dio.get(url, queryParameters: queryParameters);
+    } catch (e) {
+      log(e.toString());
       throw NoInternetException();
     }
   }

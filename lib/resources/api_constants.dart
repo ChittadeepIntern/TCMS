@@ -12,7 +12,6 @@ class NbApiConstants {
   static String nbAPIKey = "ffdfe373f0b74a7e8414accc57dfa927";
   static String optimizedRouteEndpoint =
       "optimization/v2";
-
-
-  
+  static String getOptimizedRouteEndpoint =
+      "optimization/v2/result";
 }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tcms/view/pages/route_view.dart';
 import 'package:tcms/view_model/home_dashboard_controller.dart';
 import 'package:tcms/view_model/login_controller.dart';
+import 'package:tcms/view_model/route_controller.dart';
 import 'package:tcms/view_model/transportation_cockpit_controller.dart';
 
 void main() {
@@ -12,7 +13,8 @@ void main() {
     ChangeNotifierProvider(
       create: (context) => LoginController(),
     ),
-    ChangeNotifierProvider(create: (_)=>TransportationCockpitController())
+    ChangeNotifierProvider(create: (_)=>TransportationCockpitController()),
+    ChangeNotifierProvider(create: (_)=>RouteController())
   ], child: const MyApp()));
 }
 
@@ -28,6 +30,6 @@ class MyApp extends StatelessWidget {
         theme: FluentThemeData.light(),
         darkTheme: FluentThemeData.dark(),
         themeMode: ThemeMode.light,
-        home: const RouteView());
+        home: RouteView());
   }
 }
