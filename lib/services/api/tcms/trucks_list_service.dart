@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:tcms/resources/api_constants.dart';
 
-class TrucksListProvider {
+class TrucksListService {
   final Dio _dio;
-  TrucksListProvider()
+  TrucksListService()
       : _dio = Dio(BaseOptions(baseUrl: TcmsApiConstants.BASE_URL));
 
   Future<Response> getTrucksList(String username, String authKey) async {

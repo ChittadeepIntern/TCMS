@@ -5,6 +5,7 @@ import 'package:tcms/view/pages/login_dashboard_view.dart';
 import 'package:tcms/view_model/home_dashboard_controller.dart';
 import 'package:tcms/view_model/login_controller.dart';
 import 'package:tcms/view_model/route_controller.dart';
+import 'package:tcms/view_model/summary_truck_controller.dart';
 import 'package:tcms/view_model/transportation_cockpit_controller.dart';
 
 void main() {
@@ -14,7 +15,8 @@ void main() {
       create: (context) => LoginController(),
     ),
     ChangeNotifierProvider(create: (_) => TransportationCockpitController()),
-    ChangeNotifierProvider(create: (_) => RouteController())
+    ChangeNotifierProvider(create: (_) => RouteController()),
+    ChangeNotifierProvider(create: (_)=> SummaryTruckController()),
   ], child: const MyApp()));
 }
 

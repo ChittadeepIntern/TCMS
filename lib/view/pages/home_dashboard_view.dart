@@ -2,6 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:tcms/models/login_response_model.dart';
 import 'package:tcms/view/pages/route_view.dart';
+import 'package:tcms/view/pages/summary_truck_view.dart';
 import 'package:tcms/view/pages/tabs/transportation_cockpit_tab_view.dart';
 import 'package:tcms/view/pages/tabs/welcome_to_dashboard_tab_view.dart';
 import 'package:tcms/view_model/home_dashboard_controller.dart';
@@ -17,10 +18,10 @@ class HomeDashboardView extends StatelessWidget {
 
     return ScaffoldPage(
       bottomBar: Consumer<TransportationCockpitController>(
-        builder: (BuildContext context, TransportationCockpitController value,
+        builder: (BuildContext context, TransportationCockpitController controller,
                 Widget? child) =>
             Visibility(
-          visible: true,
+          visible: controller.selectedBookingData.isNotEmpty,
           child: bottomBarRow(context),
         ),
       ),
@@ -39,7 +40,7 @@ class HomeDashboardView extends StatelessWidget {
           child: Text('Next'),
           onPressed: () {
             Navigator.push(
-                context, FluentPageRoute(builder: (context) => RouteView()));
+                context, FluentPageRoute(builder: (context) => SummaryTruckView()));
           })
     ]);
   }

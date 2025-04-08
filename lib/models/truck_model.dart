@@ -1,4 +1,4 @@
-class Truck {
+class TruckModel {
   String? truckId;
   String? truckNumber;
   String? truckName;
@@ -38,7 +38,7 @@ class Truck {
   int? customBondNotification;
   double? truckHeight;
   double? truckWidth;
-  int? truckLength;
+  double? truckLength;
   String? truckLengthType;
   String? truckWidthType;
   String? truckHeightType;
@@ -58,7 +58,7 @@ class Truck {
   String? nextScheduledMaintenanceDate;
   int? colorMode;
 
-  Truck(
+  TruckModel(
       {this.truckId,
       this.truckNumber,
       this.truckName,
@@ -118,7 +118,7 @@ class Truck {
       this.nextScheduledMaintenanceDate,
       this.colorMode});
 
-  Truck.fromJson(Map<String, dynamic> json) {
+  TruckModel.fromJson(Map<String, dynamic> json) {
     truckId = json['truckId'];
     truckNumber = json['truckNumber'];
     truckName = json['truckName'];
@@ -240,5 +240,10 @@ class Truck {
     data['nextScheduledMaintenanceDate'] = nextScheduledMaintenanceDate;
     data['colorMode'] = colorMode;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'TruckModel{truckId: $truckId, truckNumber: $truckNumber, truckName: $truckName, manufactureDate: $manufactureDate, engineNumber: $engineNumber, chasisNumber: $chasisNumber, truckType: $truckType, tonage: $tonage, axle: $axle, status: $status, bonded: $bonded, tailGate: $tailGate, purchaseDate: $purchaseDate, roadTaxExpireDate: $roadTaxExpireDate, insurance: $insurance, inspection: $inspection, permitExpire: $permitExpire, customBondExpire: $customBondExpire, statusReason: $statusReason, grandFilePath: $grandFilePath, permitFilePath: $permitFilePath, roadtaxFilePath: $roadtaxFilePath, insuranceFilePath: $insuranceFilePath, inspectionFilePath: $inspectionFilePath, customBondFilePath: $customBondFilePath, grandFilePathIcon: $grandFilePathIcon, permitFilePathIcon: $permitFilePathIcon, roadtaxFilePathIcon: $roadtaxFilePathIcon, insuranceFilePathIcon: $insuranceFilePathIcon, inspectionFilePathIcon: $inspectionFilePathIcon, customBondFilePathIcon: $customBondFilePathIcon, createdDate: $createdDate}';
   }
 }

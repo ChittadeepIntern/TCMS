@@ -20,6 +20,11 @@ class TransportationCockpitController extends ChangeNotifier {
   List<TrinaRow> rows = [];
   List<TrinaColumn> columns = [];
 
+  List<DeliveryAddress> deliveryAddresses = [];
+  List<PickupAddress> pickupAddresses = [];
+
+  List<Data> selectedBookingData = [];
+
   TransportationCockpitController() {
     log("loading data");
     setupGrid();
@@ -318,12 +323,38 @@ class TransportationCockpitController extends ChangeNotifier {
   }
 
   void tapCheckbox(TrinaGridOnRowCheckedEvent event) {
-    print("Rows has been selecetd");
-    event.row!.cells.forEach((key, value) {
-      print(value.value.toString());
-    });
-    print(event.rowIdx.toString());
-    rowsSelected = true;
+    print("Rows has been selected");
+
+    final bookingId =
+        event.row!.cells[GridConstants.bookingIDGridFieldId]!.value;
+    print("booking id :  + ${bookingId.toString()}");
+
+   Data data = dashboardDataResponseModel.data!.where((element) =>element.bookingID == bookingId).single;
+
+  print(data.toString());
+
+
+if(!selectedBookingData.contains(data)){
+selectedBookingData.add(data);
+}
+else{
+  selectedBookingData.remove(data);
+}
+  
+    print("Selected booking data : ${selectedBookingData.length}");
+    print("Selected booking data is : $selectedBookingData");
+
+
+    // event.row!.cells.forEach((key, value) {
+    //   dashboardDataResponseModel.data[]
+    //   print(key.toString() + " : " + value.value.toString());
+    // });
+
+    // event.row!.cells.forEach((key, value) {
+    //   print(value.value.toString());
+    // });
+    // print(event.rowIdx.toString());
+    // rowsSelected = true;
     notifyListeners();
   }
 }
