@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:tcms/models/login_response_model.dart';
 import 'package:tcms/resources/app_exceptions.dart';
-import 'package:tcms/services/api/auth_service.dart';
+import 'package:tcms/services/api/tcms/auth_service.dart';
 
 class AuthRepository {
   final _service = AuthService();

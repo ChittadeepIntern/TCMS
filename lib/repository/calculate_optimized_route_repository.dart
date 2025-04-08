@@ -4,8 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:tcms/models/calculate_optimized_route_model.dart';
 import 'package:tcms/models/get_optimized_route_model.dart';
 import 'package:tcms/resources/app_exceptions.dart';
-import 'package:tcms/services/api/calculate_optimized_route_provider_service.dart';
-import 'package:tcms/services/api/get_optimized_route_provider_service.dart';
+import 'package:tcms/services/api/nb/calculate_optimized_route_provider_service.dart';
+import 'package:tcms/services/api/nb/get_optimized_route_provider_service.dart';
 
 class CalculateOptimizedRouteRepository {
   final _calculateOptimizedRouteProviderService =

@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:tcms/models/dashboard_data_response_model.dart';
 import 'package:tcms/resources/app_exceptions.dart';
-import 'package:tcms/services/api/dashboard_data_service.dart';
+import 'package:tcms/services/api/tcms/dashboard_data_service.dart';
 
 class DashboardDataRepository {
   final _service = DashboardDataService();
