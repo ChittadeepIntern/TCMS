@@ -27,8 +27,10 @@ class TransportationCockpitController extends ChangeNotifier {
 
   TransportationCockpitController() {
     log("loading data");
-    setupGrid();
     loadData();
+    setupGrid();
+    //delete in the production code
+    //selectedBookingData.add(dashboardDataResponseModel.data!.where((element) => element.bookingID == "2025040012").single);
   }
 
   Future<void> loadData() async {
@@ -329,20 +331,27 @@ class TransportationCockpitController extends ChangeNotifier {
         event.row!.cells[GridConstants.bookingIDGridFieldId]!.value;
     print("booking id :  + ${bookingId.toString()}");
 
-   Data data = dashboardDataResponseModel.data!.where((element) =>element.bookingID == bookingId).single;
+    Data data = dashboardDataResponseModel.data!
+        .where((element) => element.bookingID == bookingId)
+        .single;
 
-  print(data.toString());
+    print(data.toString());
 
+    if (!selectedBookingData.contains(data)) {
+      selectedBookingData.add(data);
+      deliveryAddresses.addAll(data.deliveryAddress!);
+      pickupAddresses.addAll(data.pickupAddress!);
+    } else {
+      selectedBookingData.remove(data);
+      deliveryAddresses.removeWhere(
+          (element) => data.deliveryAddress!.contains(element));
+      pickupAddresses.removeWhere(
+          (element) => data.pickupAddress!.contains(element));
+    }
 
-if(!selectedBookingData.contains(data)){
-selectedBookingData.add(data);
-}
-else{
-  selectedBookingData.remove(data);
-}
-  
     print("Selected booking data : ${selectedBookingData.length}");
     print("Selected booking data is : $selectedBookingData");
+
 
 
     // event.row!.cells.forEach((key, value) {

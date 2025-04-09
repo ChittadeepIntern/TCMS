@@ -1,7 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:tcms/models/login_response_model.dart';
-import 'package:tcms/view/pages/route_view.dart';
 import 'package:tcms/view/pages/summary_truck_view.dart';
 import 'package:tcms/view/pages/tabs/transportation_cockpit_tab_view.dart';
 import 'package:tcms/view/pages/tabs/welcome_to_dashboard_tab_view.dart';

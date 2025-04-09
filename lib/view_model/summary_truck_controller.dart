@@ -59,5 +59,6 @@ class SummaryTruckController extends ChangeNotifier {
       pickupAddresses.addAll(booking.pickupAddress ?? []);
       deliveryAddresses.addAll(booking.deliveryAddress ?? []);
     });
+    print("Loaded all stops");
   }
 }
