@@ -8,6 +8,7 @@ import 'package:tcms/models/truck_model.dart';
 import 'package:tcms/repository/truck_repository.dart';
 import 'package:tcms/resources/app_exceptions.dart';
 import 'package:tcms/view/widgets/AlertDialog.dart';
+import 'package:trina_grid/trina_grid.dart';
 
 class SummaryTruckController extends ChangeNotifier {
   final TruckRepository _repository = TruckRepository();
@@ -18,6 +19,9 @@ class SummaryTruckController extends ChangeNotifier {
 
   List<PickupAddress> pickupAddresses = [];
   List<DeliveryAddress> deliveryAddresses = [];
+
+  List<TrinaColumn> truckColumns = [];
+  List<TrinaRow> truckRows = [];
 
   SummaryTruckController() {
     loadTruckData();
@@ -46,6 +50,8 @@ class SummaryTruckController extends ChangeNotifier {
       log("In summary truck view ${e.toString()}");
       EasyOverlay.show(child: Alertdialog(e.toString()));
     } finally {
+      setTruckColumns();
+      setTruckRows();
       _isLoading = false;
       notifyListeners();
       log(_trucks.length.toString());
@@ -60,5 +66,56 @@ class SummaryTruckController extends ChangeNotifier {
       deliveryAddresses.addAll(booking.deliveryAddress ?? []);
     });
     print("Loaded all stops");
+  }
+
+  void setTruckColumns() {
+    truckColumns = <TrinaColumn>[
+      TrinaColumn(
+        title: 'Selected',
+        field: 'selected',
+        enableRowChecked: true,
+        type: TrinaColumnType.text(),
+      ),
+      TrinaColumn(
+        title: 'Truck ID',
+        field: 'truckId',
+        type: TrinaColumnType.text(),
+        enableEditingMode: false
+      ),
+      TrinaColumn(
+        title: 'Truck Name',
+        field: 'truckName',
+        type: TrinaColumnType.text(),
+        enableEditingMode: false
+      ),
+      TrinaColumn(
+        title: 'Truck Number',
+        field: 'truckNumber',
+        type: TrinaColumnType.text(),
+        enableEditingMode: false
+      ),
+      TrinaColumn(title: 'Truck Type', field: 'truckType', type: TrinaColumnType.text(), enableEditingMode: false),
+      TrinaColumn(title: 'Tonage', field: 'truckTonage', type: TrinaColumnType.text(), enableEditingMode: false),
+      TrinaColumn(title: 'Axle', field: 'truckAxle', type: TrinaColumnType.text(),  enableEditingMode: false),
+      TrinaColumn(title: 'status', field: 'truckStatus', type: TrinaColumnType.text(), enableEditingMode: false),
+      TrinaColumn(title: 'Tail Gate', field: 'truckTailGate', type: TrinaColumnType.text(), enableEditingMode: false),
+    ];
+  }
+
+  void setTruckRows() {
+    truckRows = _trucks
+        .map((e) => TrinaRow(cells: {
+              'selected': TrinaCell(value: ''),
+              'truckId': TrinaCell(value: e.truckId ?? ''),
+              'truckName': TrinaCell(value: e.truckName ?? ''),
+              'truckNumber': TrinaCell(value: e.truckNumber ?? ''),
+              'truckType': TrinaCell(value: e.truckType ?? ''),
+              'truckTonage': TrinaCell(value: e.tonage ?? ''),
+              'truckAxle': TrinaCell(value: e.axle ?? ''),
+              'truckStatus': TrinaCell(value: e.status ?? ''),
+              'truckTailGate': TrinaCell(value: e.tailGate ?? ''),
+            }))
+        .toList();
+    notifyListeners();
   }
 }

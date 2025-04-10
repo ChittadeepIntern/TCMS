@@ -26,6 +26,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FluentApp(
+      showPerformanceOverlay: false,      // Disable the performance overlay
+  showSemanticsDebugger: false,       // Disable semantics debugger
+  
+  //checkerboardRasterCacheImages: false, // Disable checkerboarding
         builder: EasyOverlay.init(),
         debugShowCheckedModeBanner: false,
         title: "TCMS",

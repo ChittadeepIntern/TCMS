@@ -167,6 +167,8 @@ class TransportationCockpitTabView extends StatelessWidget {
                         },
                         columns: controller.columns,
                         rows: controller.rows,
+                        configuration: TrinaGridConfiguration(
+                            enterKeyAction: TrinaGridEnterKeyAction.none),
                       ),
           )),
         ],

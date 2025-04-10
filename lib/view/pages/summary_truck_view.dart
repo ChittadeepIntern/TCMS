@@ -4,6 +4,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:tcms/view_model/summary_truck_controller.dart';
 import 'package:tcms/view_model/transportation_cockpit_controller.dart';
+import 'package:trina_grid/trina_grid.dart';
 
 class SummaryTruckView extends StatelessWidget {
   const SummaryTruckView({
@@ -12,8 +13,6 @@ class SummaryTruckView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SummaryTruckController summaryTruckController =
-        context.read<SummaryTruckController>();
     // TransportationCockpitController transportationCockpitController =
     //     context.read<TransportationCockpitController>();
     // summaryTruckController
@@ -35,50 +34,61 @@ class SummaryTruckView extends StatelessWidget {
             ],
           ),
         ),
-        content: Row(
-          children: [
-            SizedBox(
-              width: 400,
-              child: Consumer<TransportationCockpitController>(
-                builder: (context, controller, child) => ListView.builder(
-                    itemCount: controller.deliveryAddresses.length,
-                    itemBuilder: (context, index) {
-                      print("I am here");
-                      print("${controller.deliveryAddresses[index].city}");
-                      print("${controller.deliveryAddresses[index].companyName}");
-                      print("${controller.deliveryAddresses[index].id}");
-                      return ListTile(
-                        title: Text(
-                            controller.deliveryAddresses[index].city.toString()),
-                        subtitle: Text(controller
-                            .deliveryAddresses[index].companyName
-                            .toString()),
-                        trailing: Text(controller
-                            .deliveryAddresses[index].id
-                            .toString()), 
-                            
-                      );
-                    }),
-              ),
-            ),
-            SizedBox(
-              width: 400,
-              child: Consumer<SummaryTruckController>(
-                builder: (context, value, child) => value.isLoading
-                    ? const Center(child: ProgressRing())
-                    : ListView.builder(
-                        itemCount: summaryTruckController.trucks.length,
-                        itemBuilder: (context, index) {
-                          final truck = summaryTruckController.trucks[index];
-                          return ListTile(
-                            title: Text(truck.truckName ?? ''),
-                            subtitle: Text(truck.truckNumber ?? ''),
-                          );
-                        },
-                      ),
-              ),
-            ),
-          ],
+        content: Column(
+          children: [buildStopsGrid(), Spacer(), buildTrucksGrid()],
         ));
+  }
+
+  SizedBox buildTrucksList() {
+    return SizedBox(
+      width: 400,
+      child: Consumer<SummaryTruckController>(
+        builder: (context, controller, child) => controller.isLoading
+            ? const Center(child: ProgressRing())
+            : ListView.builder(
+                itemCount: controller.trucks.length,
+                itemBuilder: (context, index) {
+                  final truck = controller.trucks[index];
+                  return ListTile(
+                    title: Text(truck.truckName ?? ''),
+                    subtitle: Text(truck.truckNumber ?? ''),
+                  );
+                },
+              ),
+      ),
+    );
+  }
+
+  SizedBox buildTrucksGrid() {
+    return SizedBox(
+        height: 400,
+        child: Consumer<SummaryTruckController>(
+            builder: (context, controller, child) => controller.isLoading
+                ? const Center(child: ProgressRing())
+                : TrinaGrid(
+                    columns: controller.truckColumns,
+                    rows: controller.truckRows,
+                    configuration: TrinaGridConfiguration(
+                        enterKeyAction: TrinaGridEnterKeyAction.none),
+                  )));
+  }
+
+  SizedBox buildStopsGrid() {
+    return SizedBox(
+        height: 200,
+        child: Consumer<TransportationCockpitController>(
+            builder: (context, controller, child) {
+          print(controller.stopColumns.length);
+          print(controller.stopRows.length);
+          if (controller.stopColumns.isEmpty || controller.stopRows.isEmpty) {
+            return const Center(child: Text("No data available"));
+          }
+
+          return TrinaGrid(
+              columns: controller.stopColumns,
+              rows: controller.stopRows,
+              configuration: TrinaGridConfiguration(
+                  enterKeyAction: TrinaGridEnterKeyAction.none));
+        }));
   }
 }
