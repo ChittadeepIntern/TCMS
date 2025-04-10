@@ -35,7 +35,26 @@ class SummaryTruckView extends StatelessWidget {
           ),
         ),
         content: Column(
-          children: [buildStopsGrid(), Spacer(), buildTrucksGrid()],
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Stopping Points",
+                  style: TextStyle(fontSize: 30),
+                )
+              ],
+            ),
+            buildStopsGrid(),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Available Trucks",
+                  style: TextStyle(fontSize: 30),
+                )
+              ],
+            ),
+            buildTrucksGrid()
+          ],
         ));
   }
 

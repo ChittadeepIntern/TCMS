@@ -4,6 +4,7 @@ import 'package:easy_overlay/easy_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tcms/models/dashboard_data_response_model.dart';
+import 'package:tcms/models/stop_model.dart';
 import 'package:tcms/models/truck_model.dart';
 import 'package:tcms/repository/truck_repository.dart';
 import 'package:tcms/resources/app_exceptions.dart';
@@ -19,6 +20,8 @@ class SummaryTruckController extends ChangeNotifier {
 
   List<PickupAddress> pickupAddresses = [];
   List<DeliveryAddress> deliveryAddresses = [];
+
+  List<StopModel> stops = [];
 
   List<TrinaColumn> truckColumns = [];
   List<TrinaRow> truckRows = [];
@@ -62,8 +65,24 @@ class SummaryTruckController extends ChangeNotifier {
 
   void getAllStops(List<Data> bookingData) {
     bookingData.forEach((booking) {
-      pickupAddresses.addAll(booking.pickupAddress ?? []);
-      deliveryAddresses.addAll(booking.deliveryAddress ?? []);
+      booking.pickupAddress?.forEach((element) {
+        stops.add(StopModel(
+            id: element.id,
+            dateTime: element.dateTime,
+            city: element.city,
+            companyName: element.companyName));
+        pickupAddresses.add(element);
+      });
+      booking.deliveryAddress?.forEach((element) {
+        stops.add(StopModel(
+            id: element.id,
+            dateTime: element.dateTime,
+            city: element.city,
+            companyName: element.companyName));
+        deliveryAddresses.add(element);
+      });
+      //pickupAddresses.addAll(booking.pickupAddress ?? []);
+      //deliveryAddresses.addAll(booking.deliveryAddress ?? []);
     });
     print("Loaded all stops");
   }
@@ -77,28 +96,45 @@ class SummaryTruckController extends ChangeNotifier {
         type: TrinaColumnType.text(),
       ),
       TrinaColumn(
-        title: 'Truck ID',
-        field: 'truckId',
-        type: TrinaColumnType.text(),
-        enableEditingMode: false
-      ),
+          title: 'Truck ID',
+          field: 'truckId',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
       TrinaColumn(
-        title: 'Truck Name',
-        field: 'truckName',
-        type: TrinaColumnType.text(),
-        enableEditingMode: false
-      ),
+          title: 'Truck Name',
+          field: 'truckName',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
       TrinaColumn(
-        title: 'Truck Number',
-        field: 'truckNumber',
-        type: TrinaColumnType.text(),
-        enableEditingMode: false
-      ),
-      TrinaColumn(title: 'Truck Type', field: 'truckType', type: TrinaColumnType.text(), enableEditingMode: false),
-      TrinaColumn(title: 'Tonage', field: 'truckTonage', type: TrinaColumnType.text(), enableEditingMode: false),
-      TrinaColumn(title: 'Axle', field: 'truckAxle', type: TrinaColumnType.text(),  enableEditingMode: false),
-      TrinaColumn(title: 'status', field: 'truckStatus', type: TrinaColumnType.text(), enableEditingMode: false),
-      TrinaColumn(title: 'Tail Gate', field: 'truckTailGate', type: TrinaColumnType.text(), enableEditingMode: false),
+          title: 'Truck Number',
+          field: 'truckNumber',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'Truck Type',
+          field: 'truckType',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'Tonage',
+          field: 'truckTonage',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'Axle',
+          field: 'truckAxle',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'status',
+          field: 'truckStatus',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'Tail Gate',
+          field: 'truckTailGate',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
     ];
   }
 
