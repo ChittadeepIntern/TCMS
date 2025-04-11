@@ -34,7 +34,15 @@ class LoginController extends ChangeNotifier {
           await storage.write(key: 'username', value: userNameController.text);
           await storage.write(
               key: 'authKey', value: loginResponseModel.authKey);
-
+          await storage.write(key: 'accessLevelId',
+              value: loginResponseModel.accessLevel!.accessLevelId.toString());
+          await storage.write(key: 'accessRole',
+              value: loginResponseModel.accessLevel!.accessRole.toString());
+          await storage.write(key: 'employeeName',
+              value: loginResponseModel.accessLevel!.employeeName.toString());
+          await storage.write(key: 'employeeId',
+              value: loginResponseModel.accessLevel!.employeeId.toString());  
+          
           await Navigator.pushReplacement(context,
               FluentPageRoute(builder: (context) => HomeDashboardView()));
           log("NAvigated to next page");

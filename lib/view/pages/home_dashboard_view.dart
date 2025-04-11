@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:tcms/models/login_response_model.dart';
 import 'package:tcms/view/pages/summary_truck_view.dart';
@@ -13,19 +14,29 @@ class HomeDashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Provider.of<LoginController>(context);
+    //LoginController loginController = Provider.of<LoginController>(context);
 
     return ScaffoldPage(
       bottomBar: Consumer<TransportationCockpitController>(
-        builder: (BuildContext context, TransportationCockpitController controller,
-                Widget? child) =>
+        builder: (BuildContext context,
+                TransportationCockpitController controller, Widget? child) =>
             Visibility(
           visible: controller.selectedBookingData.isNotEmpty,
           child: bottomBarRow(context),
         ),
       ),
       header: PageHeader(
-          leading: getProfileWidgets(loginController.getAccessLevel()),
+          leading: FutureBuilder(
+              future: getUserData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  Map<String, String> data =
+                      snapshot.data as Map<String, String>;
+                  return getProfileWidgets(data);
+                } else {
+                  return const Center(child: ProgressRing());
+                }
+              }),
           commandBar: _commandBar(context)),
       content: Center(
           child: Consumer<HomeDashboardController>(
@@ -38,13 +49,25 @@ class HomeDashboardView extends StatelessWidget {
       FilledButton(
           child: Text('Next'),
           onPressed: () {
-            Navigator.push(
-                context, FluentPageRoute(builder: (context) => SummaryTruckView()));
+            Navigator.push(context,
+                FluentPageRoute(builder: (context) => SummaryTruckView()));
           })
     ]);
   }
 
-  Row getProfileWidgets(AccessLevel accessLevel) {
+  Future<Map<String, String>> getUserData() async {
+    FlutterSecureStorage secureStorage = FlutterSecureStorage();
+    Map<String, String> data = {
+      'accessLevelId': await secureStorage.read(key: 'accessLevelId') ?? '',
+      'accessRole': await secureStorage.read(key: 'accessRole') ?? '',
+      'employeeName': await secureStorage.read(key: 'employeeName') ?? '',
+      'employeeId': await secureStorage.read(key: 'employeeId') ?? ''
+    };
+    return data;
+  }
+
+  Row getProfileWidgets(Map<String, String> data) {
+    FlutterSecureStorage secureStorage = FlutterSecureStorage();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 20,
@@ -52,25 +75,25 @@ class HomeDashboardView extends StatelessWidget {
         Column(
           children: [
             Text('Access Level Id'),
-            Text('${accessLevel.accessLevelId}'),
+            Text(data['accessLevelId'].toString()),
           ],
         ),
         Column(
           children: [
             Text('Access Role'),
-            Text(accessLevel.accessRole ?? ''),
+            Text(data['accessRole'].toString()),
           ],
         ),
         Column(
           children: [
             Text('Employee Name'),
-            Text(accessLevel.employeeName ?? ''),
+            Text(data['employeeName'].toString()),
           ],
         ),
         Column(
           children: [
             Text('Employee ID'),
-            Text(accessLevel.employeeId ?? ''),
+            Text(data['employeeId'].toString()),
           ],
         ),
       ],
