@@ -5,6 +5,7 @@ class TcmsApiConstants {
   static String dashboardDataEndpoint =
       "/rest/tcdashboard/getLiveStatus/default/";
   static String trucksListEndpoint = "/rest/truck/get/default/";
+  static String bookingDetailsEndpoint = "/rest/tmsbooking/getBookingDetails/";
 }
 
 class NbApiConstants {
