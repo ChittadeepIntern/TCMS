@@ -21,7 +21,7 @@ class HomeDashboardView extends StatelessWidget {
         builder: (BuildContext context,
                 TransportationCockpitController controller, Widget? child) =>
             Visibility(
-          visible: controller.selectedBookingData.isNotEmpty,
+          visible: controller.selectedBookingIds.isNotEmpty,
           child: bottomBarRow(context),
         ),
       ),
