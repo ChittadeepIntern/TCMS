@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:easy_overlay/easy_overlay.dart';
@@ -30,6 +31,8 @@ class TransportationCockpitController extends ChangeNotifier {
   List<StopModel> stops = [];
 
   List<Data> selectedBookingData = [];
+
+  List<String> selectedBookingIds = [];
 
   TransportationCockpitController() {
     log("loading data");
@@ -168,19 +171,15 @@ class TransportationCockpitController extends ChangeNotifier {
           type: TrinaColumnType.text(),
           enableEditingMode: false),
       TrinaColumn(
-        title: 'Delivery Time',
-        field: 'deliveryTime',
-        type: TrinaColumnType.text(),
-        
-          enableEditingMode: false
-      ),
+          title: 'Delivery Time',
+          field: 'deliveryTime',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
       TrinaColumn(
-        title: 'Request or Phone',
-        field: GridConstants.requestorPhoneGridFieldId,
-        type: TrinaColumnType.text(),
-        
-          enableEditingMode: false
-      ),
+          title: 'Request or Phone',
+          field: GridConstants.requestorPhoneGridFieldId,
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
       TrinaColumn(
         title: GridConstants.truckGridFieldId,
         field: GridConstants.truckGridFieldId,
@@ -190,8 +189,8 @@ class TransportationCockpitController extends ChangeNotifier {
         //   'Owner',
         // ]
         type: TrinaColumnType.text(),
-        
-          enableEditingMode: false,
+
+        enableEditingMode: false,
       ),
 
       // TrinaColumn(
@@ -213,17 +212,17 @@ class TransportationCockpitController extends ChangeNotifier {
       //   ),
       // ),
       TrinaColumn(
-          title: 'Pickup Time',
-          field: GridConstants.pikcupTimeGridFieldId,
-          type: TrinaColumnType.text(),
-          
-          enableEditingMode: false,),
+        title: 'Pickup Time',
+        field: GridConstants.pikcupTimeGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Booking ID',
-          field: GridConstants.bookingIDGridFieldId,
-          type: TrinaColumnType.text(),
-          
-          enableEditingMode: false,),
+        title: 'Booking ID',
+        field: GridConstants.bookingIDGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       // TrinaColumn(
       //   title: 'salary',
       //   field: 'salary',
@@ -249,134 +248,138 @@ class TransportationCockpitController extends ChangeNotifier {
       //   },
       // ),
       TrinaColumn(
-          title: 'Local POD Threshold',
-          field: GridConstants.localPODThresholdGridFieldId,
-          type: TrinaColumnType.text(),
-          
-          enableEditingMode: false,),
+        title: 'Local POD Threshold',
+        field: GridConstants.localPODThresholdGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Booking Sent To Invoice',
-          field: GridConstants.bookingSentToInvoiceGridFieldId,
-          type: TrinaColumnType.text(),
-          
-          enableEditingMode: false,
-          //type: TrinaColumnType.time(),
-          ),
+        title: 'Booking Sent To Invoice',
+        field: GridConstants.bookingSentToInvoiceGridFieldId,
+        type: TrinaColumnType.text(),
+
+        enableEditingMode: false,
+        //type: TrinaColumnType.time(),
+      ),
       TrinaColumn(
-          title: 'Customer ID',
-          field: GridConstants.customerIdGridFieldId,
-          type: TrinaColumnType.text(),
-          
-          enableEditingMode: false,
-          //type: TrinaColumnType.time(),
-          ),
+        title: 'Customer ID',
+        field: GridConstants.customerIdGridFieldId,
+        type: TrinaColumnType.text(),
+
+        enableEditingMode: false,
+        //type: TrinaColumnType.time(),
+      ),
       TrinaColumn(
-          title: 'Outstation POD Threshold',
-          field: GridConstants.outstationPODThresholdGridFieldId,
-          type: TrinaColumnType.text(),
-          
-          enableEditingMode: false,),
+        title: 'Outstation POD Threshold',
+        field: GridConstants.outstationPODThresholdGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       //type: TrinaColumnType.time(),
 
       TrinaColumn(
         title: 'Tonnage',
         field: GridConstants.tonnageGridFieldId,
         type: TrinaColumnType.text(),
-          
-            enableEditingMode: false,
+        enableEditingMode: false,
       ),
       TrinaColumn(
-          title: 'Manpower',
-          field: GridConstants.manpowerGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          //type: TrinaColumnType.time(),
-          ),
+        title: 'Manpower',
+        field: GridConstants.manpowerGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+        //type: TrinaColumnType.time(),
+      ),
       TrinaColumn(
-          title: 'Locked',
-          field: GridConstants.lockedGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,),
+        title: 'Locked',
+        field: GridConstants.lockedGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       //type: TrinaColumnType.time(),
       TrinaColumn(
-          title: 'Delivery',
-          field: GridConstants.deliveryGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Delivery',
+        field: GridConstants.deliveryGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Drop Points',
-          field: GridConstants.dropPointsGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Drop Points',
+        field: GridConstants.dropPointsGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Pickup',
-          field: GridConstants.pickupGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,),
+        title: 'Pickup',
+        field: GridConstants.pickupGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Color Mode',
-          field: GridConstants.colorModeGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Color Mode',
+        field: GridConstants.colorModeGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'GPS tracking url',
-          field: GridConstants.gpsTrackingUrlGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'GPS tracking url',
+        field: GridConstants.gpsTrackingUrlGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Equipments',
-          field: GridConstants.equipmentsGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Equipments',
+        field: GridConstants.equipmentsGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Driver',
-          field: GridConstants.driverGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Driver',
+        field: GridConstants.driverGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Booked Date',
-          field: GridConstants.bookedDateGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Booked Date',
+        field: GridConstants.bookedDateGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Customer',
-          field: GridConstants.customerGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
-          
+        title: 'Customer',
+        field: GridConstants.customerGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
+
       TrinaColumn(
-          title: 'Status',
-          field: GridConstants.statusGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Status',
+        field: GridConstants.statusGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'DO Number',
-          field: GridConstants.doNumbersGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,),
+        title: 'DO Number',
+        field: GridConstants.doNumbersGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Agreed Price',
-          field: GridConstants.agreedPriceGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,),
+        title: 'Agreed Price',
+        field: GridConstants.agreedPriceGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
       TrinaColumn(
-          title: 'Vendor',
-          field: GridConstants.vendorGridFieldId,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false,
-          ),
+        title: 'Vendor',
+        field: GridConstants.vendorGridFieldId,
+        type: TrinaColumnType.text(),
+        enableEditingMode: false,
+      ),
     ];
   }
 
+  /*
   void tapCheckbox(TrinaGridOnRowCheckedEvent event) {
     print("Rows has been selected");
 
@@ -403,6 +406,24 @@ class TransportationCockpitController extends ChangeNotifier {
     }
 
     _setStopRows();
+    notifyListeners();
+  }
+*/
+  void tapCheckbox(TrinaGridOnRowCheckedEvent event) {
+    print("Rows has been selected");
+    final bookingId =
+        event.row!.cells[GridConstants.bookingIDGridFieldId]!.value;
+    print("booking id :  + ${bookingId.toString()}");
+
+    if (selectedBookingIds.contains(bookingId.toString())) {
+      selectedBookingIds.remove(bookingId.toString());
+    } else {
+      selectedBookingIds.add(bookingId.toString());
+    }
+
+    FlutterSecureStorage storage = FlutterSecureStorage();
+    storage.write(key: 'bookingIds', value: jsonEncode(selectedBookingIds));
+
     notifyListeners();
   }
 

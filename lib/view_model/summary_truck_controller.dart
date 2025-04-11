@@ -1,18 +1,24 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:easy_overlay/easy_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tcms/models/booking_details_model.dart';
 import 'package:tcms/models/dashboard_data_response_model.dart';
 import 'package:tcms/models/stop_model.dart';
 import 'package:tcms/models/truck_model.dart';
+import 'package:tcms/repository/booking_details_repository.dart';
 import 'package:tcms/repository/truck_repository.dart';
 import 'package:tcms/resources/app_exceptions.dart';
 import 'package:tcms/view/widgets/AlertDialog.dart';
 import 'package:trina_grid/trina_grid.dart';
 
 class SummaryTruckController extends ChangeNotifier {
-  final TruckRepository _repository = TruckRepository();
+  final TruckRepository _truckRepository = TruckRepository();
+  final BookingDetailsRepository _bookingDetailsRepository =
+      BookingDetailsRepository();
+
   bool _isLoading = false;
   List<TruckModel> _trucks = [];
 
@@ -26,8 +32,11 @@ class SummaryTruckController extends ChangeNotifier {
   List<TrinaColumn> truckColumns = [];
   List<TrinaRow> truckRows = [];
 
+  List<BookingDetailsModel> bookingDataModels = [];
+
   SummaryTruckController() {
     loadTruckData();
+    loadBookingData();
   }
   bool get isLoading => _isLoading;
 
@@ -48,7 +57,7 @@ class SummaryTruckController extends ChangeNotifier {
       log("username saved $username");
       log("authkey saved $authKey");
 
-      _trucks = await _repository.getTrucksList(username, authKey);
+      _trucks = await _truckRepository.getTrucksList(username, authKey);
     } catch (e) {
       log("In summary truck view ${e.toString()}");
       EasyOverlay.show(child: Alertdialog(e.toString()));
@@ -61,6 +70,32 @@ class SummaryTruckController extends ChangeNotifier {
       log(_trucks.toString());
       log("Notified listeners");
     }
+  }
+
+  Future<void> loadBookingData() async {
+    FlutterSecureStorage storage = FlutterSecureStorage();
+
+    final username = await storage.read(key: 'username');
+    final authKey = await storage.read(key: 'authKey');
+
+    if (username == null || authKey == null) {
+      log("username and auth key not getting saved properly");
+      throw LoginException();
+    }
+
+    List<String> bookingIds =
+        await jsonDecode(await storage.read(key: 'bookingIds') ?? '[]');
+
+    print(bookingIds.toString());
+
+    for (String bookingId in bookingIds) {
+      log("Booking ID: $bookingId");
+      BookingDetailsModel bookingData = await _bookingDetailsRepository
+          .getBookingDetails(bookingId, username, authKey);
+      bookingDataModels.add(bookingData);
+    }
+
+    print("Booking data loaded successfully");
   }
 
   void getAllStops(List<Data> bookingData) {
