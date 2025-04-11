@@ -13,11 +13,6 @@ class SummaryTruckView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TransportationCockpitController transportationCockpitController =
-    //     context.read<TransportationCockpitController>();
-    // summaryTruckController
-    //     .getAllStops(transportationCockpitController.selectedBookingData);
-    // print('Pickup addresses length ${summaryTruckController.pickupAddresses.length.toString()}');
     return ScaffoldPage(
         header: PageHeader(
           title: const Text('Truck Summary'),
@@ -27,7 +22,7 @@ class SummaryTruckView extends StatelessWidget {
               const SizedBox(width: 10),
               FilledButton(
                 onPressed: () {
-                  //summaryTruckController.loadData();
+                  context.read<SummaryTruckController>().loadTruckData();
                 },
                 child: const Text('Refresh'),
               ),
@@ -36,7 +31,8 @@ class SummaryTruckView extends StatelessWidget {
         ),
         content: Column(
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Stopping Points",
@@ -45,7 +41,8 @@ class SummaryTruckView extends StatelessWidget {
               ],
             ),
             buildStopsGrid(),
-            Row(mainAxisAlignment: MainAxisAlignment.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Available Trucks",
