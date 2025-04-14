@@ -59,7 +59,7 @@ class SummaryTruckView extends StatelessWidget {
     return SizedBox(
       width: 400,
       child: Consumer<SummaryTruckController>(
-        builder: (context, controller, child) => controller.isLoading
+        builder: (context, controller, child) => controller.isTruckDataLoading
             ? const Center(child: ProgressRing())
             : ListView.builder(
                 itemCount: controller.trucks.length,
@@ -79,7 +79,7 @@ class SummaryTruckView extends StatelessWidget {
     return SizedBox(
         height: 400,
         child: Consumer<SummaryTruckController>(
-            builder: (context, controller, child) => controller.isLoading
+            builder: (context, controller, child) => controller.isTruckDataLoading
                 ? const Center(child: ProgressRing())
                 : TrinaGrid(
                     columns: controller.truckColumns,
@@ -92,7 +92,7 @@ class SummaryTruckView extends StatelessWidget {
   SizedBox buildStopsGrid() {
     return SizedBox(
         height: 200,
-        child: Consumer<TransportationCockpitController>(
+        child: Consumer<SummaryTruckController>(
             builder: (context, controller, child) {
           print(controller.stopColumns.length);
           print(controller.stopRows.length);

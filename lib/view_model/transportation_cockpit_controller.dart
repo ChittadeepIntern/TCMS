@@ -5,7 +5,6 @@ import 'package:easy_overlay/easy_overlay.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tcms/models/dashboard_data_response_model.dart';
-import 'package:tcms/models/stop_model.dart';
 import 'package:tcms/repository/dashboard_data_repository.dart';
 import 'package:tcms/resources/app_exceptions.dart';
 import 'package:tcms/resources/grid_constants.dart';
@@ -22,14 +21,6 @@ class TransportationCockpitController extends ChangeNotifier {
   List<TrinaRow> rows = [];
   List<TrinaColumn> columns = [];
 
-  List<TrinaRow> stopRows = [];
-  List<TrinaColumn> stopColumns = [];
-
-  List<DeliveryAddress> deliveryAddresses = [];
-  List<PickupAddress> pickupAddresses = [];
-
-  List<StopModel> stops = [];
-
   List<Data> selectedBookingData = [];
 
   List<String> selectedBookingIds = [];
@@ -38,8 +29,6 @@ class TransportationCockpitController extends ChangeNotifier {
     log("loading data");
     loadData();
     setupGrid();
-    //delete in the production code
-    //selectedBookingData.add(dashboardDataResponseModel.data!.where((element) => element.bookingID == "2025040012").single);
   }
 
   Future<void> loadData() async {
@@ -71,7 +60,7 @@ class TransportationCockpitController extends ChangeNotifier {
     }
   }
 
-  void placeData() {
+ void placeData() {
     log("placing data");
     List<Data> data = dashboardDataResponseModel.data ?? [];
 
@@ -427,51 +416,4 @@ class TransportationCockpitController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _setStopRows() {
-    print("Setting stop rows");
-    _setStopColumns();
-    if (deliveryAddresses.isNotEmpty) {
-      stopRows = deliveryAddresses.map((e) {
-        return TrinaRow(cells: {
-          'selected': TrinaCell(value: ''),
-          'id': TrinaCell(value: e.id ?? ''),
-          'dateTime': TrinaCell(value: e.dateTime ?? ''),
-          'city': TrinaCell(value: e.city ?? ''),
-          'companyName': TrinaCell(value: e.companyName ?? '')
-        });
-      }).toList();
-    }
   }
-
-  void _setStopColumns() {
-    print("Setting stop columns");
-    stopColumns = <TrinaColumn>[
-      TrinaColumn(
-          title: 'Selected',
-          field: 'selected',
-          enableRowChecked: true,
-          type: TrinaColumnType.text(),
-          enableEditingMode: false),
-      TrinaColumn(
-          title: 'ID',
-          field: 'id',
-          type: TrinaColumnType.text(),
-          enableEditingMode: false),
-      TrinaColumn(
-          title: 'Date Time',
-          field: 'dateTime',
-          type: TrinaColumnType.text(),
-          enableEditingMode: false),
-      TrinaColumn(
-          title: 'City',
-          field: 'city',
-          type: TrinaColumnType.text(),
-          enableEditingMode: false),
-      TrinaColumn(
-          title: 'Company Name',
-          field: 'companyName',
-          type: TrinaColumnType.text(),
-          enableEditingMode: false),
-    ];
-  }
-}

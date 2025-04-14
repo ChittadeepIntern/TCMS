@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:easy_overlay/easy_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tcms/models/booking_details_model.dart';
-import 'package:tcms/models/dashboard_data_response_model.dart';
-import 'package:tcms/models/stop_model.dart';
 import 'package:tcms/models/truck_model.dart';
 import 'package:tcms/repository/booking_details_repository.dart';
 import 'package:tcms/repository/truck_repository.dart';
@@ -19,30 +16,30 @@ class SummaryTruckController extends ChangeNotifier {
   final BookingDetailsRepository _bookingDetailsRepository =
       BookingDetailsRepository();
 
-  bool _isLoading = false;
+  bool isTruckDataLoading = false;
   List<TruckModel> _trucks = [];
 
   List<TruckModel> get trucks => _trucks;
 
-  List<PickupAddress> pickupAddresses = [];
-  List<DeliveryAddress> deliveryAddresses = [];
-
-  List<StopModel> stops = [];
+  List<Address> stops = [];
 
   List<TrinaColumn> truckColumns = [];
   List<TrinaRow> truckRows = [];
 
   List<BookingDetailsModel> bookingDataModels = [];
+  List<TrinaColumn> stopColumns = [];
+  List<TrinaRow> stopRows = [];
+
+  bool isBookingDataLoading = false;
 
   SummaryTruckController() {
     loadTruckData();
     loadBookingData();
   }
-  bool get isLoading => _isLoading;
 
   Future<void> loadTruckData() async {
     try {
-      _isLoading = true;
+      isTruckDataLoading = true;
       notifyListeners();
       final FlutterSecureStorage storage = FlutterSecureStorage();
 
@@ -64,7 +61,7 @@ class SummaryTruckController extends ChangeNotifier {
     } finally {
       setTruckColumns();
       setTruckRows();
-      _isLoading = false;
+      isTruckDataLoading = false;
       notifyListeners();
       log(_trucks.length.toString());
       log(_trucks.toString());
@@ -73,31 +70,51 @@ class SummaryTruckController extends ChangeNotifier {
   }
 
   Future<void> loadBookingData() async {
-    FlutterSecureStorage storage = FlutterSecureStorage();
+    try {
+      isBookingDataLoading = true;
+      notifyListeners();
+      FlutterSecureStorage storage = FlutterSecureStorage();
 
-    final username = await storage.read(key: 'username');
-    final authKey = await storage.read(key: 'authKey');
+      final username = await storage.read(key: 'username');
+      final authKey = await storage.read(key: 'authKey');
 
-    if (username == null || authKey == null) {
-      log("username and auth key not getting saved properly");
-      throw LoginException();
+      if (username == null || authKey == null) {
+        log("username and auth key not getting saved properly");
+        throw LoginException();
+      }
+
+      List<String> bookingIds =
+          await jsonDecode(await storage.read(key: 'bookingIds') ?? '[]');
+
+      print(bookingIds.toString());
+
+      for (String bookingId in bookingIds) {
+        log("Booking ID: $bookingId");
+        BookingDetailsModel bookingData = await _bookingDetailsRepository
+            .getBookingDetails(bookingId, username, authKey);
+        bookingDataModels.add(bookingData);
+
+        stops.addAll(bookingData.list!.pickupAddress ?? []);
+        stops.addAll(bookingData.list!.deliveryAddress ?? []);
+      }
+
+      print("Booking data loaded successfully");
+    } catch (e) {
+      log("In summary truck view ${e.toString()}");
+      EasyOverlay.show(child: Alertdialog(e.toString()));
+    } finally {
+      _setStopColumns();
+      _setStopRows();
+      isBookingDataLoading = false;
+      notifyListeners();
+      print("Notified listeners for booking data");
+      print(stops.length.toString());
+      print(stops.toString());
+      print("Loaded all stops");
     }
-
-    List<String> bookingIds =
-        await jsonDecode(await storage.read(key: 'bookingIds') ?? '[]');
-
-    print(bookingIds.toString());
-
-    for (String bookingId in bookingIds) {
-      log("Booking ID: $bookingId");
-      BookingDetailsModel bookingData = await _bookingDetailsRepository
-          .getBookingDetails(bookingId, username, authKey);
-      bookingDataModels.add(bookingData);
-    }
-
-    print("Booking data loaded successfully");
   }
 
+/*
   void getAllStops(List<Data> bookingData) {
     bookingData.forEach((booking) {
       booking.pickupAddress?.forEach((element) {
@@ -121,7 +138,7 @@ class SummaryTruckController extends ChangeNotifier {
     });
     print("Loaded all stops");
   }
-
+*/
   void setTruckColumns() {
     truckColumns = <TrinaColumn>[
       TrinaColumn(
@@ -188,5 +205,53 @@ class SummaryTruckController extends ChangeNotifier {
             }))
         .toList();
     notifyListeners();
+  }
+
+  void _setStopColumns() {
+    print("Setting stop columns");
+    stopColumns = <TrinaColumn>[
+      TrinaColumn(
+          title: 'Selected',
+          field: 'selected',
+          enableRowChecked: true,
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'ID',
+          field: 'id',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'Date Time',
+          field: 'dateTime',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'City',
+          field: 'city',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+      TrinaColumn(
+          title: 'Company Name',
+          field: 'companyName',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),
+    ];
+  }
+
+  void _setStopRows() {
+    print("Setting stop rows");
+    _setStopColumns();
+    if (stops.isNotEmpty) {
+      stopRows = stops.map((e) {
+        return TrinaRow(cells: {
+          'selected': TrinaCell(value: ''),
+          'id': TrinaCell(value: e.id ?? ''),
+          'dateTime': TrinaCell(value: e.dateTime ?? ''),
+          'city': TrinaCell(value: e.city ?? ''),
+          'companyName': TrinaCell(value: e.companyName ?? '')
+        });
+      }).toList();
+    }
   }
 }

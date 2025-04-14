@@ -252,6 +252,8 @@ class Address {
     picked = json['picked'];
 
   }
+
+
 }
 
 class CityList {
