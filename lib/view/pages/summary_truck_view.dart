@@ -15,7 +15,7 @@ class SummaryTruckView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaffoldPage(
         header: PageHeader(
-          title: const Text('Truck Summary'),
+          title: const Text('Stops-Truck Summary'),
           commandBar: Row(
             children: [
               const Text('Truck Summary'),
@@ -23,6 +23,13 @@ class SummaryTruckView extends StatelessWidget {
               FilledButton(
                 onPressed: () {
                   context.read<SummaryTruckController>().loadTruckData();
+                },
+                child: const Text('Refresh'),
+              ),
+            const Text('Stops Summary'),
+              FilledButton(
+                onPressed: () {
+                  context.read<SummaryTruckController>().loadBookingData();
                 },
                 child: const Text('Refresh'),
               ),

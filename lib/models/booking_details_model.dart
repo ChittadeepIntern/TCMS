@@ -95,6 +95,12 @@ class ListClass {
         deliveryAddress!.add(Address.fromJson(v));
       });
     }
+    if (json['pickupAddress'] != null) {
+      pickupAddress = <Address>[];
+      json['pickupAddress'].forEach((v) {
+        pickupAddress!.add(Address.fromJson(v));
+      });
+    }
     customerId = json['customerId'];
     preBookId = json['preBookId'];
     specialEquipments = json['specialEquipments'];
@@ -245,15 +251,12 @@ class Address {
       });
     }
     countryName = json['countryName'];
-    region = json['region'];    
+    region = json['region'];
     remarks = json['remarks'];
     dropPointKms = json['dropPointKms'];
     pop = json['pop'];
     picked = json['picked'];
-
   }
-
-
 }
 
 class CityList {

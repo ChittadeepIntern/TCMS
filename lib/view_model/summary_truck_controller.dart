@@ -94,6 +94,7 @@ class SummaryTruckController extends ChangeNotifier {
             .getBookingDetails(bookingId, username, authKey);
         bookingDataModels.add(bookingData);
 
+        print("Pickup stops for booking ID $bookingId: ${bookingData.list?.pickupAddress!.length ?? 0}");
         stops.addAll(bookingData.list!.pickupAddress ?? []);
         stops.addAll(bookingData.list!.deliveryAddress ?? []);
       }
@@ -236,6 +237,16 @@ class SummaryTruckController extends ChangeNotifier {
           field: 'companyName',
           type: TrinaColumnType.text(),
           enableEditingMode: false),
+    TrinaColumn(
+          title: 'Address Type',
+          field: 'addressType',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),  
+    TrinaColumn(
+          title: 'Geo-location',
+          field: 'geoLocation',
+          type: TrinaColumnType.text(),
+          enableEditingMode: false),  
     ];
   }
 
@@ -249,7 +260,9 @@ class SummaryTruckController extends ChangeNotifier {
           'id': TrinaCell(value: e.id ?? ''),
           'dateTime': TrinaCell(value: e.dateTime ?? ''),
           'city': TrinaCell(value: e.city ?? ''),
-          'companyName': TrinaCell(value: e.companyName ?? '')
+          'companyName': TrinaCell(value: e.companyName ?? ''),
+          'geoLocation': TrinaCell(value: e.geoLocation ?? ''),
+          'addressType': TrinaCell(value: e.type ?? ''),
         });
       }).toList();
     }
