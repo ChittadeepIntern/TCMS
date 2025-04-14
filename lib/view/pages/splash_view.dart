@@ -20,7 +20,7 @@ class SplashView extends StatelessWidget {
     });
 
     return ScaffoldPage(
-      content: Center(child: Text("Splash waiting")),
+      content: Center(child: Image.asset('assets/images/splash.jpg')),
     );
   }
 }
