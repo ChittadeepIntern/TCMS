@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
+import 'package:tcms/view/pages/route_view.dart';
 import 'package:tcms/view_model/summary_truck_controller.dart';
 import 'package:tcms/view_model/transportation_cockpit_controller.dart';
 import 'package:trina_grid/trina_grid.dart';
@@ -14,6 +15,23 @@ class SummaryTruckView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage(
+      bottomBar: Consumer<SummaryTruckController>(builder: (context, controller, child) => Visibility(
+          visible: controller.selectedTrucksIds.isNotEmpty && controller.selectedStopsGeoCoordinates.isNotEmpty,
+        child: 
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FilledButton(
+                  child: const Text('Next'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        FluentPageRoute(
+                            builder: (context) =>
+                                const RouteView()));
+                  })
+            ],
+          ))),
         header: PageHeader(
           title: const Text('Stops-Truck Summary'),
           commandBar: Row(
@@ -26,7 +44,7 @@ class SummaryTruckView extends StatelessWidget {
                 },
                 child: const Text('Refresh'),
               ),
-            const Text('Stops Summary'),
+              const Text('Stops Summary'),
               FilledButton(
                 onPressed: () {
                   context.read<SummaryTruckController>().loadBookingData();
@@ -60,40 +78,25 @@ class SummaryTruckView extends StatelessWidget {
             buildTrucksGrid()
           ],
         ));
-  }
-
-  SizedBox buildTrucksList() {
-    return SizedBox(
-      width: 400,
-      child: Consumer<SummaryTruckController>(
-        builder: (context, controller, child) => controller.isTruckDataLoading
-            ? const Center(child: ProgressRing())
-            : ListView.builder(
-                itemCount: controller.trucks.length,
-                itemBuilder: (context, index) {
-                  final truck = controller.trucks[index];
-                  return ListTile(
-                    title: Text(truck.truckName ?? ''),
-                    subtitle: Text(truck.truckNumber ?? ''),
-                  );
-                },
-              ),
-      ),
-    );
+        
   }
 
   SizedBox buildTrucksGrid() {
     return SizedBox(
         height: 400,
         child: Consumer<SummaryTruckController>(
-            builder: (context, controller, child) => controller.isTruckDataLoading
-                ? const Center(child: ProgressRing())
-                : TrinaGrid(
-                    columns: controller.truckColumns,
-                    rows: controller.truckRows,
-                    configuration: TrinaGridConfiguration(
-                        enterKeyAction: TrinaGridEnterKeyAction.none),
-                  )));
+            builder: (context, controller, child) =>
+                controller.isTruckDataLoading
+                    ? const Center(child: ProgressRing())
+                    : TrinaGrid(
+                        columns: controller.truckColumns,
+                        rows: controller.truckRows,
+                        onRowChecked: (event) {
+                          controller.tapTrucks(event);
+                        },
+                        configuration: TrinaGridConfiguration(
+                            enterKeyAction: TrinaGridEnterKeyAction.none),
+                      )));
   }
 
   SizedBox buildStopsGrid() {
@@ -110,6 +113,9 @@ class SummaryTruckView extends StatelessWidget {
           return TrinaGrid(
               columns: controller.stopColumns,
               rows: controller.stopRows,
+              onRowChecked: (event) {
+                controller.tapStops(event);
+              },
               configuration: TrinaGridConfiguration(
                   enterKeyAction: TrinaGridEnterKeyAction.none));
         }));

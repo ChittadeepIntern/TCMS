@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ui';
 import 'package:easy_overlay/easy_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -31,6 +32,9 @@ class SummaryTruckController extends ChangeNotifier {
   List<TrinaRow> stopRows = [];
 
   bool isBookingDataLoading = false;
+
+  List<String> selectedStopsGeoCoordinates = [];
+  List<String> selectedTrucksIds = [];
 
   SummaryTruckController() {
     loadTruckData();
@@ -94,7 +98,8 @@ class SummaryTruckController extends ChangeNotifier {
             .getBookingDetails(bookingId, username, authKey);
         bookingDataModels.add(bookingData);
 
-        print("Pickup stops for booking ID $bookingId: ${bookingData.list?.pickupAddress!.length ?? 0}");
+        print(
+            "Pickup stops for booking ID $bookingId: ${bookingData.list?.pickupAddress!.length ?? 0}");
         stops.addAll(bookingData.list!.pickupAddress ?? []);
         stops.addAll(bookingData.list!.deliveryAddress ?? []);
       }
@@ -237,16 +242,16 @@ class SummaryTruckController extends ChangeNotifier {
           field: 'companyName',
           type: TrinaColumnType.text(),
           enableEditingMode: false),
-    TrinaColumn(
+      TrinaColumn(
           title: 'Address Type',
           field: 'addressType',
           type: TrinaColumnType.text(),
-          enableEditingMode: false),  
-    TrinaColumn(
+          enableEditingMode: false),
+      TrinaColumn(
           title: 'Geo-location',
           field: 'geoLocation',
           type: TrinaColumnType.text(),
-          enableEditingMode: false),  
+          enableEditingMode: false),
     ];
   }
 
@@ -266,5 +271,29 @@ class SummaryTruckController extends ChangeNotifier {
         });
       }).toList();
     }
+  }
+
+  void tapStops(TrinaGridOnRowCheckedEvent event) {
+    print("Tapped on stops row");
+
+    String geoLocation = event.row!.cells['geoLocation']?.value ?? '';
+    if (selectedStopsGeoCoordinates.contains(geoLocation)) {
+      selectedStopsGeoCoordinates.remove(geoLocation);
+    } else {
+      selectedStopsGeoCoordinates.add(geoLocation);
+    }
+
+    notifyListeners();
+  }
+
+  void tapTrucks(TrinaGridOnRowCheckedEvent event) {
+    print("Tapped on trucks row");
+    String truckId = event.row!.cells['truckId']?.value ?? '';
+    if (selectedTrucksIds.contains(truckId)) {
+      selectedTrucksIds.remove(truckId);
+    } else {
+      selectedTrucksIds.add(truckId);
+    }
+    notifyListeners();
   }
 }

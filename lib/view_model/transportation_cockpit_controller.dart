@@ -368,36 +368,6 @@ class TransportationCockpitController extends ChangeNotifier {
     ];
   }
 
-  /*
-  void tapCheckbox(TrinaGridOnRowCheckedEvent event) {
-    print("Rows has been selected");
-
-    final bookingId =
-        event.row!.cells[GridConstants.bookingIDGridFieldId]!.value;
-    print("booking id :  + ${bookingId.toString()}");
-
-    Data data = dashboardDataResponseModel.data!
-        .where((element) => element.bookingID == bookingId)
-        .single;
-
-    print(data.toString());
-
-    if (!selectedBookingData.contains(data)) {
-      selectedBookingData.add(data);
-      deliveryAddresses.addAll(data.deliveryAddress!);
-      pickupAddresses.addAll(data.pickupAddress!);
-    } else {
-      selectedBookingData.remove(data);
-      deliveryAddresses
-          .removeWhere((element) => data.deliveryAddress!.contains(element));
-      pickupAddresses
-          .removeWhere((element) => data.pickupAddress!.contains(element));
-    }
-
-    _setStopRows();
-    notifyListeners();
-  }
-*/
   void tapCheckbox(TrinaGridOnRowCheckedEvent event) {
     print("Rows has been selected");
     final bookingId =
